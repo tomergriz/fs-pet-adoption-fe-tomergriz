@@ -4,11 +4,18 @@ import { ChakraProvider } from "@chakra-ui/react";
 import App from "./App";
 import "./index.css";
 import theme from "./theme/theme";
+import Favicon from "react-favicon";
+import { BrowserRouter } from "react-router-dom";
+import "./index.css";
+// import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     // <React.StrictMode>
-        <ChakraProvider theme={theme}>
+    <ChakraProvider theme={theme}>
+        <BrowserRouter>
+            <Favicon url="img\favicon-32x32.ico" />
             <App />
-        </ChakraProvider>
+        </BrowserRouter>
+    </ChakraProvider>
     // </React.StrictMode>
 );
