@@ -24,7 +24,7 @@ export default function Sidebar() {
         let activeClassName = "underline";
     }
 
-    const [navSize, changeNavSize] = useState("large");
+    const [navSize, changeNavSize] = useState("small");
     return (
         <>
             <Flex
@@ -55,23 +55,6 @@ export default function Sidebar() {
                             else changeNavSize("small");
                         }}
                     />
-                    {/* <nav>
-                        <ul>
-                            <li>
-                                <NavLink
-                                    to="Search"
-                                    style={({ isActive }) =>
-                                        isActive ? activeStyle : undefined
-                                    }
-                                >
-                                    Messages
-                                </NavLink>
-                            </li>
-                        </ul>
-                    </nav> */}
-                    {/* <Link as={ReachLink} to='/search'>
-  Search
-</Link> */}
                     <NavItem
                         navSize={navSize}
                         icon={FiHome}
@@ -83,7 +66,7 @@ export default function Sidebar() {
                         navSize={navSize}
                         icon={FiSearch}
                         title="Search"
-                        to="/Search"
+                        to="/search"
                         as={NavLink}
                     />
                 </Flex>

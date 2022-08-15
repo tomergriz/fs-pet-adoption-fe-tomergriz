@@ -1,4 +1,4 @@
-import { Heading } from "@chakra-ui/react";
+import { Heading, Box, Flex, Spacer, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import NavBar from "../Pages/NavBar";
 // import NavBar2 from '../components/NavBar/NavBar2'
@@ -7,16 +7,21 @@ import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import HomePage from "../Pages/HomePage";
 import SearchPage from "../pages/SearchPage";
+import SignBar from "../components/SignBar/SignBar.jsx";
 
 function App() {
     return (
         <>
-            <NavBar />
-
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="Search" element={<SearchPage />} />
-            </Routes>
+            <Flex>
+                <NavBar />
+                <VStack align="end">
+                    <SignBar />
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/search" element={<SearchPage />} />
+                    </Routes>
+                </VStack>
+            </Flex>
             {/* <NavBar2/> */}
             {/* <Heading as="h1" color="brand.color3">Hello world!</Heading>
     <Heading as="h2">Foo</Heading> */}

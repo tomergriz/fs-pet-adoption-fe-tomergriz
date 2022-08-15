@@ -1,8 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { Flex } from "@chakra-ui/react";
 
 function SearchPage() {
   return (
-    <div>SearchPage</div>
+    <Flex>SearchPage</Flex>
   )
 }
 
