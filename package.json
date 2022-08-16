@@ -30,6 +30,7 @@
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
     "@vue/babel-plugin-jsx": "^1.1.1",
+    "flow-babel-webpack-plugin": "^1.1.1",
     "vite": "^3.0.0",
     "vite-plugin-favicon": "^1.0.8"
   }

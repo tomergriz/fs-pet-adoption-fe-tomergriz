@@ -1,7 +1,6 @@
 import { Heading, Box, Flex, Spacer, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import NavBar from "../Pages/NavBar";
-// import NavBar2 from '../components/NavBar/NavBar2'
 import * as React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
@@ -12,19 +11,17 @@ import SignBar from "../components/SignBar/SignBar.jsx";
 function App() {
     return (
         <>
-            <Flex>
-                <NavBar />
-                <VStack align="end">
+            <Box>
+                {/* <NavBar /> */}
+                <Box>
                     <SignBar />
+                </Box>
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/search" element={<SearchPage />} />
                     </Routes>
-                </VStack>
-            </Flex>
-            {/* <NavBar2/> */}
-            {/* <Heading as="h1" color="brand.color3">Hello world!</Heading>
-    <Heading as="h2">Foo</Heading> */}
+            </Box>
+            {/* { <Heading as="h1" color="brand.color3">Hello world!</Heading>} */}
         </>
     );
 }

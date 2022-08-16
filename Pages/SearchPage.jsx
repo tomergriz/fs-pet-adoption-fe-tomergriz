@@ -3,7 +3,7 @@ import { Flex } from "@chakra-ui/react";
 
 function SearchPage() {
   return (
-    <Flex>SearchPage</Flex>
+    <Box>SearchPage</Box>
   )
 }
 
