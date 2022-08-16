@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-export default function LogInForm({onClose, toggle}) {
+export default function LogInForm({ onClose, toggle }) {
     const [loginObject, setLoginObject] = useState({});
 
     const handleChange = ({ target }) => {
@@ -37,48 +37,42 @@ export default function LogInForm({onClose, toggle}) {
 
     return (
         <>
-            <FormControl>
+            <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input
-                    type="email"
-                    name="email"
-                    id="email"
-                    onChange={handleChange}
-                />
+                <Input type="email" name="email" onChange={handleChange} />
             </FormControl>
-            <FormControl>
+            <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <Input
                     type="password"
                     name="password"
-                    id="password"
                     onChange={handleChange}
                 />
             </FormControl>
             <Stack spacing={10}>
-                <Stack
-                    direction={{
-                        base: "column",
-                        sm: "row",
-                    }}
-                    align={"start"}
-                    justify={"space-between"}
-                ></Stack>
                 <Button
+                    loadingText="Submitting"
+                    size="lg"
                     bg={"blue.400"}
                     color={"white"}
+                    _hover={{
+                        bg: "blue.500",
+                    }}
                     onClick={() => {
                         handleSubmit();
                         onClose();
-                    }}
-                    _hover={{
-                        bg: "blue.500",
                     }}
                 >
                     Login
                 </Button>
 
-                <Text onClick={toggle} >Don't have an account? Sign up</Text>
+                <Text align={"center"} color={"blue.400"} onClick={toggle} 
+                   _hover={{color: "blue.500",}}
+                   _focus={{ boxShadow: "outline" }}
+             
+                   >
+                    Don't have an account? Sign up
+                </Text>
 
                 {/* <Link color={"blue.400"}>
                     Don't have an account yet? Sign Up

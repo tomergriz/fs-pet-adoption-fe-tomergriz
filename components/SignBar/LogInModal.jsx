@@ -24,30 +24,30 @@ import React, { useState } from "react";
 import LogInForm from "./LogInForm";
 import SignUpForm from "./SignUpForm";
 
-export default function LogInModal({ isOpen, onClose, toggle}) {
+export default function LogInModal({ isOpen, onClose, toggle }) {
     const [hasAccount, setHasAccount] = useState(true);
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={()=>{{setHasAccount(true)} {onClose(true)} }}>
             <ModalOverlay>
                 <ModalContent>
-                    <ModalHeader>{hasAccount? `Login` : `SignUp`}</ModalHeader>
+                    <ModalHeader>{hasAccount ? `Login` : `SignUp`}</ModalHeader>
                     <ModalCloseButton />
-                    <ModalBody pb={6}>
+                    <ModalBody>
                         <Box
                             rounded={"lg"}
                             bg={useColorModeValue("white", "gray.700")}
                             boxShadow={"lg"}
-                            p={8}
+                            p={1}
                         >
-                            <Stack spacing={4}>
+                            <Stack spacing={1}>
                                 {hasAccount ? (
                                     <LogInForm
                                         toggle={() => setHasAccount(false)}
                                         onClose={onClose}
                                     />
                                 ) : (
-                                    <SignUpForm toggle={() => setHasAccount(true)} onClose={onClose}  />
+                                    <SignUpForm toggle={() => setHasAccount(true)} onClose={onClose} />
                                 )}
                             </Stack>
                         </Box>

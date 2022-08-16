@@ -1,7 +1,6 @@
 import {
     Box,
     Flex,
-    Button,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -14,16 +13,22 @@ import {
     FormControl,
     Input,
     Checkbox,
-    Stack,
     Link,
+    HStack,
+    InputGroup,
+    InputRightElement,
+    Stack,
+    Button,
     Heading,
     Text,
     useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-export default function SignUpForm({onClose , toggle}) {
+export default function SignUpForm({ onClose, toggle }) {
     const [loginObject, setLoginObject] = useState({});
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -37,50 +42,88 @@ export default function SignUpForm({onClose , toggle}) {
 
     return (
         <>
-            <FormControl>
-                <FormLabel>This Is The SignUP FORMMMMMM</FormLabel>
-                <Input
-                    type="email"
-                    name="email"
-                    id="email"
-                    onChange={handleChange}
-                />
+            <HStack>
+                <Box>
+                    <FormControl id="firstName" isRequired>
+                        <FormLabel>First Name</FormLabel>
+                        <Input
+                            type="text"
+                            name="firstName"
+                            onChange={handleChange}
+                        />
+                    </FormControl>
+                </Box>
+                <Box>
+                    <FormControl id="lastName">
+                        <FormLabel>Last Name</FormLabel>
+                        <Input
+                            type="text"
+                            name="lastName"
+                            onChange={handleChange}
+                        />
+                    </FormControl>
+                </Box>
+            </HStack>
+            <FormControl id="email" isRequired>
+                <FormLabel>Email address</FormLabel>
+                <Input type="email" />
             </FormControl>
-            <FormControl>
+            <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
                 <Input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     id="password"
                     onChange={handleChange}
                 />
+                <InputGroup>
+                    <InputRightElement h={"full"}>
+                        <Button
+                            mt={12}
+                            variant={"ghost"}
+                            onClick={() =>
+                                setShowPassword((showPassword) => !showPassword)
+                            }
+                        >
+                            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                        </Button>
+                    </InputRightElement>
+                    <FormControl id="rePassword" isRequired>
+                        <FormLabel pt={4}>Re Password</FormLabel>
+                        <Input
+                            type={showPassword ? "text" : "password"}
+                            name="rePassword"
+                            id="rePassword"
+                            onChange={handleChange}
+                        />
+                    </FormControl>
+                </InputGroup>
             </FormControl>
-            <Stack spacing={10}>
-                <Stack
-                    direction={{
-                        base: "column",
-                        sm: "row",
-                    }}
-                    align={"start"}
-                    justify={"space-between"}
-                ></Stack>
+            <FormControl id="phone">
+                <FormLabel>Phone Number</FormLabel>
+                <Input type="phone" name="phone" onChange={handleChange} />
+            </FormControl>
+            <Stack spacing={0} pt={2}>
                 <Button
+                    loadingText="Submitting"
+                    size="lg"
                     bg={"blue.400"}
                     color={"white"}
+                    _hover={{
+                        bg: "blue.500",
+                    }}
                     onClick={() => {
                         handleSubmit();
                         onClose();
                     }}
-                    _hover={{
-                        bg: "blue.500",
-                    }}
                 >
-                    Login
+                    Sign up
                 </Button>
-                <Link color={"blue.400"}>
-                <Text onClick={toggle} >Have an account? Sign In</Text>
-                    
-                </Link>
+                <Stack pt={2}>
+                    <Text align={"center"} color={"blue.400"} onClick={toggle}>
+                        Already a user? Login
+                    </Text>
+                </Stack>
             </Stack>
         </>
     );

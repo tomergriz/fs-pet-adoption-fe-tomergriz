@@ -21,9 +21,7 @@ import {
     useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import LogInForm from "./LogInForm";
 import LogInModal from "./LogInModal";
-// import SignUpModal from "./SignUpModal";
 
 export default function SignBar() {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,7 +33,6 @@ export default function SignBar() {
         <>
             <Box>
                 <Button
-                    display={{ base: "none", md: "inline-flex" }}
                     fontSize={"sm"}
                     fontWeight={600}
                     color={"white"}
@@ -52,7 +49,6 @@ export default function SignBar() {
                 </Button>
             </Box>
             {onOpen && <LogInModal isOpen={isOpen} onClose={onClose} />}
-            {/* <LogInForm /> */}
         </>
     );
 }

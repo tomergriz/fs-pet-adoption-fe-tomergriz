@@ -24,7 +24,7 @@ export default function Sidebar() {
         let activeClassName = "underline";
     }
 
-    const [navSize, changeNavSize] = useState("small");
+    const [navSize, changeNavSize] = useState("large");
     return (
         <>
             <Flex
