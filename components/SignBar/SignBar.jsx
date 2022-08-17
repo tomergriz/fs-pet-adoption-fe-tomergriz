@@ -26,9 +26,9 @@ import LogInModal from "./LogInModal"
 
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
-        const [ modalIsOpen, modalOnOpen ] = useState(false);
-        // console.log("modalIsOpen Sign",modalIsOpen);
-        // console.log("isOpen Sign",isOpen);
+        // const [ modalIsOpen, modalOnOpen ] = useState(false);
+            const { isOpen : modalIsOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure();
+
 
         return (
         <Box>
@@ -42,6 +42,7 @@ export default function SignBar() {
                 borderStyle={"solid"}
                 borderColor={useColorModeValue("gray.200", "gray.900")}
                 align={"center"}
+                width={"100vw"}
             >
                 <Flex
                     flex={{ base: 1, md: "auto" }}
@@ -113,8 +114,8 @@ export default function SignBar() {
                  >
                      Login
                  </Button>
-             {modalOnOpen && <LogInModal isOpen={modalIsOpen} /*onClose={modalOnClose}*/ />}
 
+             {modalIsOpen && <LogInModal isOpen={modalIsOpen} onClose={modalOnClose} />}
 
 
                 </Stack>

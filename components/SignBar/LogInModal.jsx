@@ -28,8 +28,8 @@ import SignUpForm from "./SignUpForm";
 
 export default function LogInModal({ isOpen, onClose, toggle }) {
     const [hasAccount, setHasAccount] = useState(true);
-console.log("isOpen", isOpen);
-console.log("onClose", onClose);
+
+    console.log("isOpen", isOpen);
 
     return (
         <Modal isOpen={isOpen} onClose={()=>{{setHasAccount(true)} {onClose(true)} }}>

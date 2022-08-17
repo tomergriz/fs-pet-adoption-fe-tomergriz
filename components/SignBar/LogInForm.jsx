@@ -22,7 +22,13 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
+// import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
+
+
 export default function LogInForm({ onClose, toggle }) {
+    const baseUrl = "http://localhost:8080";
+    const [notesList, setNotesList] = useState([]);
+
     const [loginObject, setLoginObject] = useState({});
 
     const handleChange = ({ target }) => {
@@ -30,9 +36,19 @@ export default function LogInForm({ onClose, toggle }) {
         setLoginObject({ ...loginObject, [name]: value });
     };
 
+    // const fetchNotes = async () => {
+    //     try {
+    //       const res = await axios.get(`${baseUrl}/notes`);
+    //       setNotesList(res.data);
+    //       console.log("notesList", notesList);
+    //     } catch (err) {
+    //       console.log(err);
+    //     }
+    //   };
+
     const handleSubmit = () => {
-        // onSubmit(loginObject);
         console.log("onSubmit:  ", loginObject);
+        fetchNotes()
     };
 
     return (
