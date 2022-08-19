@@ -14,6 +14,7 @@ import {
     useColorModeValue,
     useBreakpointValue,
     useDisclosure,
+    Avatar,
 } from "@chakra-ui/react";
 import {
     HamburgerIcon,
@@ -66,7 +67,7 @@ export default function SignBar() {
                     flex={{ base: 1 }}
                     justify={{ base: "center", md: "start" }}
                 >
-                    <Text
+                    <Flex
                         textAlign={useBreakpointValue({
                             base: "center",
                             md: "left",
@@ -74,8 +75,12 @@ export default function SignBar() {
                         fontFamily={"heading"}
                         color={useColorModeValue("gray.800", "white")}
                     >
-                        Logo
-                    </Text>
+                        <Avatar // Gust 
+                            size="sm"
+                            name="Ryan Florence"
+                            src="https://bit.ly/ryan-florence"
+                        />
+                    </Flex>
 
                     <Flex display={{ base: "none", md: "flex" }} ml={10}>
                         <DesktopNav />
