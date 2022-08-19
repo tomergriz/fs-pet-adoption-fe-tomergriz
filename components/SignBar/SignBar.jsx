@@ -33,21 +33,22 @@ import {
 } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import LogInModal from "./LogInModal";
+import { NavLink } from "react-router-dom";
 
-const NavLink = ({ children }) => (
-    <Link
-        px={2}
-        py={1}
-        rounded={"md"}
-        _hover={{
-            textDecoration: "none",
-            bg: useColorModeValue("gray.200", "gray.700"),
-        }}
-        href={"#"}
-    >
-        {children}
-    </Link>
-);
+// const NavLink = ({ children }) => (
+//     <Link
+//         px={2}
+//         py={1}
+//         rounded={"md"}
+//         _hover={{
+//             textDecoration: "none",
+//             bg: useColorModeValue("gray.200", "gray.700"),
+//         }}
+//         href={"#"}
+//     >
+//         {children}
+//     </Link>
+// );
 
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
@@ -65,7 +66,7 @@ export default function SignBar() {
     } = useDisclosure();
 
     return (
-        <Box>
+        <Box maxW={"7xl"}>
             <Flex
                 bg={useColorModeValue("white", "gray.800")}
                 color={useColorModeValue("gray.600", "white")}
@@ -77,6 +78,7 @@ export default function SignBar() {
                 borderColor={useColorModeValue("gray.200", "gray.900")}
                 align={"center"}
                 width={"100vw"}
+                z-index={3}
             >
                 <Flex
                     flex={{ base: 1, md: "auto" }}
@@ -96,11 +98,14 @@ export default function SignBar() {
                         aria-label={"Toggle Navigation"}
                     />
                 </Flex>
+
                 <Flex
                     flex={{ base: 1 }}
                     justify={{ base: "center", md: "start" }}
                 >
-                    <Flex display={{ base: "none", md: "flex" }} ml={10}>
+                   
+
+                    <Flex display={{ base: "none", md: "flex" }} ml={5}>
                         <DesktopNav />
                     </Flex>
                 </Flex>
@@ -191,61 +196,73 @@ const DesktopNav = () => {
 
     return (
         <Stack direction={"row"} spacing={4}>
-            {NAV_ITEMS.map((navItem) => (
-                <Box key={navItem.label}>
-                    <Popover trigger={"hover"} placement={"bottom-start"}>
-                        <PopoverTrigger>
-                            <Link
-                                p={2}
-                                href={navItem.href ?? "#"}
-                                fontSize={"sm"}
-                                fontWeight={500}
-                                color={linkColor}
-                                _hover={{
-                                    textDecoration: "none",
-                                    color: linkHoverColor,
-                                }}
-                            >
-                                {navItem.label}
-                            </Link>
-                        </PopoverTrigger>
+            <Box>
+                <Popover trigger={"hover"} placement={"bottom-start"}>
+                    <Box
+                        p={2}
+                        fontWeight={500}
+                        color={linkColor}
+                        _hover={{
+                            textDecoration: "none",
+                            color: linkHoverColor,
+                        }}
+                    >
+                        <Link mr={5} as={NavLink} to="/" title="home">
+                            Home
+                        </Link>
+                        <Link as={NavLink} to="/search" title="search">
+                            Search
+                        </Link>
+                    </Box>
 
-                        {navItem.children && (
-                            <PopoverContent
-                                border={0}
-                                boxShadow={"xl"}
-                                bg={popoverContentBgColor}
-                                p={4}
-                                rounded={"xl"}
-                                minW={"sm"}
-                            >
-                                <Stack>
-                                    {navItem.children.map((child) => (
+                    {
+                        <PopoverContent
+                            border={0}
+                            boxShadow={"xl"}
+                            bg={popoverContentBgColor}
+                            p={4}
+                            rounded={"xl"}
+                            minW={"sm"}
+                        >
+                            <Link as={NavLink} to="/search" title="search">
+                            Search6
+                        </Link>
+                            <Link as={NavLink} to="/search" title="search">
+                            Search6
+                        </Link>
+                            <Stack>
+                                {/* {navItem.children.map((child) => (
                                         <DesktopSubNav
                                             key={child.label}
                                             {...child}
                                         />
-                                    ))}
-                                </Stack>
-                            </PopoverContent>
-                        )}
-                    </Popover>
-                </Box>
-            ))}
+                                        
+                                    ))} */}
+                                <NavLink to="/search" title="search">
+                                    Search3
+                                </NavLink>
+                            </Stack>
+                        </PopoverContent>
+                    }
+                </Popover>
+            </Box>
+            {/* ))} */}
         </Stack>
     );
 };
 
 const DesktopSubNav = ({ label, href, subLabel }) => {
     return (
-        <Link
-            href={href}
-            role={"group"}
-            display={"block"}
-            p={2}
-            rounded={"md"}
-            _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
-        >
+        // <Link
+        //     href={href}
+        //     role={"group"}
+        //     display={"block"}
+        //     p={2}
+        //     rounded={"md"}
+        //     _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
+        // >
+        <NavLink to="/search" title="search">
+            Search4
             <Stack direction={"row"} align={"center"}>
                 <Box>
                     <Text
@@ -277,7 +294,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
                     />
                 </Flex>
             </Stack>
-        </Link>
+        </NavLink>
     );
 };
 
@@ -340,12 +357,15 @@ const MobileNavItem = ({ label, children, href }) => {
                     borderColor={useColorModeValue("gray.200", "gray.700")}
                     align={"start"}
                 >
-                    {children &&
+                    <NavLink to="/search" title="search">
+                        Search5
+                    </NavLink>
+                    {/* {children &&
                         children.map((child) => (
                             <Link key={child.label} py={2} href={child.href}>
                                 {child.label}
                             </Link>
-                        ))}
+                        ))} */}
                 </Stack>
             </Collapse>
         </Stack>
@@ -389,7 +409,7 @@ const NAV_ITEMS = [
     },
     {
         label: "Search",
-        href: "#",
+        href: "/search",
     },
 ];
 //     const { isOpen, onOpen, onClose } = useDisclosure();
