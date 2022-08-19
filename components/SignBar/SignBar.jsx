@@ -7,7 +7,6 @@ import {
     Stack,
     Collapse,
     Icon,
-    Link,
     Popover,
     PopoverTrigger,
     PopoverContent,
@@ -15,23 +14,57 @@ import {
     useBreakpointValue,
     useDisclosure,
     Avatar,
+    Link,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    MenuDivider,
+    useColorMode,
+    Center,
 } from "@chakra-ui/react";
 import {
     HamburgerIcon,
     CloseIcon,
     ChevronDownIcon,
     ChevronRightIcon,
+    MoonIcon,
+    SunIcon,
 } from "@chakra-ui/icons";
 import React, { useState } from "react";
-import LogInModal from "./LogInModal"
+import LogInModal from "./LogInModal";
+
+const NavLink = ({ children }) => (
+    <Link
+        px={2}
+        py={1}
+        rounded={"md"}
+        _hover={{
+            textDecoration: "none",
+            bg: useColorModeValue("gray.200", "gray.700"),
+        }}
+        href={"#"}
+    >
+        {children}
+    </Link>
+);
 
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
-        // const [ modalIsOpen, modalOnOpen ] = useState(false);
-            const { isOpen : modalIsOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure();
+    const { colorMode, toggleColorMode } = useColorMode();
+    const {
+        isOpen: darkIsOpen,
+        onOpen: darkOnOpen,
+        onClose: darkOnClose,
+    } = useDisclosure();
+    // const [ modalIsOpen, modalOnOpen ] = useState(false);
+    const {
+        isOpen: modalIsOpen,
+        onOpen: modalOnOpen,
+        onClose: modalOnClose,
+    } = useDisclosure();
 
-
-        return (
+    return (
         <Box>
             <Flex
                 bg={useColorModeValue("white", "gray.800")}
@@ -67,62 +100,80 @@ export default function SignBar() {
                     flex={{ base: 1 }}
                     justify={{ base: "center", md: "start" }}
                 >
-                    <Flex
-                        textAlign={useBreakpointValue({
-                            base: "center",
-                            md: "left",
-                        })}
-                        fontFamily={"heading"}
-                        color={useColorModeValue("gray.800", "white")}
-                    >
-                        <Avatar // Gust 
-                            size="sm"
-                            name="Ryan Florence"
-                            src="https://bit.ly/ryan-florence"
-                        />
-                    </Flex>
-
                     <Flex display={{ base: "none", md: "flex" }} ml={10}>
                         <DesktopNav />
                     </Flex>
                 </Flex>
 
                 <Stack
+                    px={{ base: 4 }}
                     flex={{ base: 1, md: 0 }}
                     justify={"flex-end"}
                     direction={"row"}
+                    align={"center"}
                     spacing={6}
                 >
-                    <Button
-                        as={"a"}
-                        fontSize={"sm"}
-                        fontWeight={400}
-                        variant={"link"}
-                        href={"#"}
+                    <Link
+                        onClick={toggleColorMode}
+                        bg={useColorModeValue("white", "gray.800")}
                     >
-                        Sign In
+                        {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+                    </Link>
+
+                    <Menu>
+                        <MenuButton
+                            as={Button}
+                            rounded={"full"}
+                            variant={"link"}
+                            cursor={"pointer"}
+                            minW={0}
+                        >
+                            <Avatar
+                                size={"sm"}
+                                src={"https://bit.ly/ryan-florence"}
+                            />
+                        </MenuButton>
+                        <MenuList alignItems={"center"}>
+                            <br />
+                            <Center>
+                                <Avatar
+                                    size={"2xl"}
+                                    src={"https://bit.ly/ryan-florence"}
+                                />
+                            </Center>
+                            <br />
+                            <Center>
+                                <p>Username</p>
+                            </Center>
+                            <br />
+                            <MenuDivider />
+                            <MenuItem>Your Servers</MenuItem>
+                            <MenuItem>Account Settings</MenuItem>
+                            <MenuItem>Logout</MenuItem>
+                        </MenuList>
+                    </Menu>
+                    <Button //modallllllllllllllll
+                        // display = {"none"}
+                        fontSize={"sm"}
+                        fontWeight={600}
+                        color={"white"}
+                        bg={"pink.400"}
+                        href={"#"}
+                        top="0"
+                        onClick={modalOnOpen}
+                        _hover={{
+                            bg: "pink.300",
+                        }}
+                    >
+                        Login
                     </Button>
 
-
-                    <Button   //modallllllllllllllll
-                    fontSize={"sm"}
-                     fontWeight={600}
-                     color={"white"}
-                     bg={"pink.400"}
-                     href={"#"}
-                     top="0"
-                     right="5"
-                     onClick={modalOnOpen}
-                     _hover={{
-                         bg: "pink.300",
-                     }}
-                 >
-                     Login
-                 </Button>
-
-             {modalIsOpen && <LogInModal isOpen={modalIsOpen} onClose={modalOnClose} />}
-
-
+                    {modalIsOpen && (
+                        <LogInModal
+                            isOpen={modalIsOpen}
+                            onClose={modalOnClose}
+                        />
+                    )}
                 </Stack>
             </Flex>
 
@@ -301,13 +352,6 @@ const MobileNavItem = ({ label, children, href }) => {
     );
 };
 
-// interface NavItem {
-//     label;
-//     subLabel?;
-//     children?;
-//     href?;
-// }
-
 const NAV_ITEMS = [
     {
         label: "Inspiration",
@@ -340,11 +384,11 @@ const NAV_ITEMS = [
         ],
     },
     {
-        label: "Learn Design",
-        href: "#",
+        label: "Home",
+        href: "/",
     },
     {
-        label: "Hire Designers",
+        label: "Search",
         href: "#",
     },
 ];

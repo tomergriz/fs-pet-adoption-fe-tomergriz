@@ -11,17 +11,9 @@ import SignBar from "../components/SignBar/SignBar.jsx";
 function App() {
     const baseUrl = "http://localhost:8080";
 
-        const { colorMode, toggleColorMode } = useColorMode()
-
-
     return (
         <>
                 {/* <NavBar /> */}
-                <header>
-            <Button onClick={toggleColorMode}>
-              Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-            </Button>
-          </header>
                     <SignBar />
                     <Routes>
                         <Route path="/" element={<HomePage />} />
