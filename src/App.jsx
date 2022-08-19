@@ -1,4 +1,4 @@
-import { Heading, Box, Flex, Spacer, VStack } from "@chakra-ui/react";
+import { Heading, Box, Flex, Spacer, VStack, Button, useColorMode } from "@chakra-ui/react";
 import { useState } from "react";
 import NavBar from "../components/NavBar/NavBar";
 import * as React from "react";
@@ -11,9 +11,17 @@ import SignBar from "../components/SignBar/SignBar.jsx";
 function App() {
     const baseUrl = "http://localhost:8080";
 
+        const { colorMode, toggleColorMode } = useColorMode()
+
+
     return (
         <>
                 {/* <NavBar /> */}
+                <header>
+            <Button onClick={toggleColorMode}>
+              Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
+            </Button>
+          </header>
                     <SignBar />
                     <Routes>
                         <Route path="/" element={<HomePage />} />
