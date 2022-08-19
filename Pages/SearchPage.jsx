@@ -1,11 +1,9 @@
-import React from 'react';
+import React from "react";
 import { Flex } from "@chakra-ui/react";
-import Cards from '../components/SearchCards/Cards';
+import GridWithAddToCartButton from "../components/GridWithAddToCartButton/GridWithAddToCartButton";
 
 function SearchPage() {
-  return (
-    <Cards/>
-  )
+    return <GridWithAddToCartButton />;
 }
 
-export default SearchPage
+export default SearchPage;

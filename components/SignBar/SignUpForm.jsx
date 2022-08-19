@@ -25,19 +25,30 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function SignUpForm({ onClose, toggle }) {
-    const [loginObject, setLoginObject] = useState({});
     const [showPassword, setShowPassword] = useState(false);
+    const [userInfo, setUserInfo] = useState({});
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
-        setLoginObject({ ...loginObject, [name]: value });
+        setUserInfo({ ...userInfo, [name]: value });
     };
 
-    const handleSubmit = () => {
-        // onSubmit(loginObject);
-        console.log("onSubmit:  ", loginObject);
+    const handleSignUp = async () => {
+        try {
+            const res = await axios.post(
+                "http://localhost:8080/users/signup",
+                userInfo
+            );
+            if (res.data) {
+                console.log(userInfo);
+            }
+        } catch (err) {
+            console.log(err.response.data);
+        }
     };
 
     return (
@@ -66,7 +77,7 @@ export default function SignUpForm({ onClose, toggle }) {
             </HStack>
             <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input type="email" name="email" onChange={handleChange} />
             </FormControl>
             <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
@@ -113,7 +124,7 @@ export default function SignUpForm({ onClose, toggle }) {
                         bg: "blue.500",
                     }}
                     onClick={() => {
-                        handleSubmit();
+                        handleSignUp();
                         onClose();
                     }}
                 >

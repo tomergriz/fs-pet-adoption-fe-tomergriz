@@ -13,13 +13,13 @@ import {
   } from '@chakra-ui/react'
   import * as React from 'react'
 //   import { Rating } from './Rating'
-//   import { FavouriteButton } from './FavouriteButton'
+  import { FavoriteButton } from './FavoriteButton'
 //   import { PriceTag } from './PriceTag'
   
 
 
 
-    export default function SingleCard(props) {
+    export default function PetCard(props) {
 
     const { product, rootProps } = props
     const { name, imageUrl, price, salePrice, rating } = product
@@ -44,12 +44,12 @@ import {
               })}
             />
           </AspectRatio>
-          {/* <FavouriteButton
+          <FavoriteButton
             position="absolute"
             top="4"
             right="4"
-            aria-label={`Add ${name} to your favourites`}
-          /> */}
+            aria-label={`Add ${name} to your favorite`}
+          />
         </Box>
         <Stack>
           <Stack spacing="1">

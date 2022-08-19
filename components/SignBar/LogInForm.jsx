@@ -21,13 +21,11 @@ import {
     useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-
-// import { AxiosProvider, Request, Get, Delete, Head, Post, Put, Patch, withAxios } from 'react-axios'
-
+import axios from "axios";
 
 export default function LogInForm({ onClose, toggle }) {
     const baseUrl = "http://localhost:8080";
-    const [notesList, setNotesList] = useState([]);
+    const [usersList, setUsersList] = useState([]);
 
     const [loginObject, setLoginObject] = useState({});
 
@@ -36,19 +34,20 @@ export default function LogInForm({ onClose, toggle }) {
         setLoginObject({ ...loginObject, [name]: value });
     };
 
-    // const fetchNotes = async () => {
+    // const handleLogin = async () => {
     //     try {
-    //       const res = await axios.get(`${baseUrl}/notes`);
-    //       setNotesList(res.data);
-    //       console.log("notesList", notesList);
+    //         const res = await axios.POST(`${baseUrl}/users/login`);
+    //         setUsersList(res.data);
+    //         console.log("baseUrl", baseUrl);
+    //         console.log("res.data",res.data);
     //     } catch (err) {
-    //       console.log(err);
+    //         console.log(err);
     //     }
-    //   };
+    // };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log("onSubmit:  ", loginObject);
-        fetchNotes()
+        // await handleLogin()
     };
 
     return (
@@ -82,11 +81,13 @@ export default function LogInForm({ onClose, toggle }) {
                     Login
                 </Button>
 
-                <Text align={"center"} color={"blue.400"} onClick={toggle} 
-                   _hover={{color: "blue.500",}}
-                   _focus={{ boxShadow: "outline" }}
-             
-                   >
+                <Text
+                    align={"center"}
+                    color={"blue.400"}
+                    onClick={toggle}
+                    _hover={{ color: "blue.500" }}
+                    _focus={{ boxShadow: "outline" }}
+                >
                     Don't have an account? Sign up
                 </Text>
 
