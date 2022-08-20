@@ -1,6 +1,7 @@
 import {
     Box,
     Flex,
+    Container,
     Text,
     IconButton,
     Button,
@@ -43,13 +44,14 @@ export default function SignBar() {
     } = useDisclosure();
 
     return (
-        <Box maxW={"7xl"}>
+        <Box >
             <Flex
+            maxW= {{ base: "95vw", md: "98vw" }}
                 bg={useColorModeValue("white", "gray.800")}
                 color={useColorModeValue("gray.600", "white")}
                 minH={"60px"}
                 py={{ base: 2 }}
-                px={{ base: 4 }}
+                pl={{ base: 4 }}
                 borderBottom={1}
                 borderStyle={"solid"}
                 borderColor={useColorModeValue("gray.200", "gray.900")}
@@ -209,7 +211,7 @@ const DesktopNav = () => {
 
 const MobileNav = () => {
     return (
-        <Stack
+        <Container
             bg={useColorModeValue("white", "gray.800")}
             p={4}
             display={{ md: "none" }}
@@ -241,6 +243,6 @@ const MobileNav = () => {
                     </Link>
                 </Stack>
             </Stack>
-        </Stack>
+        </Container>
     );
 };
