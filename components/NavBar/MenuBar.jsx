@@ -139,13 +139,12 @@ export default function SignBar() {
                         fontSize={"sm"}
                         fontWeight={600}
                         color={"white"}
-                        bg={"pink.400"}
                         href={"#"}
                         top="0"
                         onClick={modalOnOpen}
-                        _hover={{
-                            bg: "pink.300",
-                        }}
+                        colorScheme={"red"}
+                            bg={"red.400"}
+                            _hover={{ bg: "red.500" }}
                     >
                         Login
                     </Button>

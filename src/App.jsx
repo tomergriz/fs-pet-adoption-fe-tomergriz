@@ -3,7 +3,7 @@ import * as React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import HomePage from "../Pages/HomePage";
-import SearchPage from "../pages/SearchPage";
+import SearchPage from "../Pages/SearchPage";
 import MenuBar from "../components/NavBar/MenuBar";
 import { Box, Flex } from "@chakra-ui/react";
 
