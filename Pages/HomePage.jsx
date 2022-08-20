@@ -10,7 +10,6 @@ import {
     Icon,
     IconButton,
     createIcon,
-    // IconProps,
     useColorModeValue,
 } from "@chakra-ui/react";
 
@@ -18,11 +17,11 @@ import { NavLink } from "react-router-dom";
 
 export default function CallToActionWithVideo() {
     return (
-        <Container maxWidth={"100vw"} minHeight={"88vh"} mb={"13px"}>
+        <Container maxWidth={"100vw"} minHeight={"80.4vh"} mb={"13px"}>
             <Stack
                 align={"center"}
                 spacing={{ base: 8, md: 10 }}
-                pt={{ base: 20, md: 20 }}
+                mt={{ base: 10, md: 10 }}
                 direction={{ base: "column", md: "row" }}
             >
                 <Stack flex={1} spacing={{ base: 5, md: 10 }}>
@@ -31,11 +30,7 @@ export default function CallToActionWithVideo() {
                         fontWeight={600}
                         fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
                     >
-                        <Text
-                            as={"span"}
-                            position={"relative"}
-                       
-                        >
+                        <Text as={"span"} position={"relative"}>
                             Adopt A Pet.
                         </Text>
                         <br />

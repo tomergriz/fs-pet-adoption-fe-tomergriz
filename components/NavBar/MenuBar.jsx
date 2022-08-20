@@ -19,12 +19,7 @@ import {
     useColorMode,
     Center,
 } from "@chakra-ui/react";
-import {
-    HamburgerIcon,
-    CloseIcon,
-    MoonIcon,
-    SunIcon,
-} from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
 import LogInModal from "./LogInModal";
 import { NavLink } from "react-router-dom";
@@ -44,9 +39,9 @@ export default function SignBar() {
     } = useDisclosure();
 
     return (
-        <Box >
+        <Box>
             <Flex
-            maxW= {{ base: "95vw", md: "98vw" }}
+                maxW={{ base: "95vw", md: "98vw" }}
                 bg={useColorModeValue("white", "gray.800")}
                 color={useColorModeValue("gray.600", "white")}
                 minH={"60px"}
@@ -129,32 +124,32 @@ export default function SignBar() {
                             </Center>
                             <br />
                             <MenuDivider />
-                            <MenuItem>Your Servers</MenuItem>
-                            <MenuItem>Account Settings</MenuItem>
+                            <MenuItem>Profile Settings</MenuItem>
                             <MenuItem>Logout</MenuItem>
                         </MenuList>
                     </Menu>
                     <Flex>
-                    <Button //modallllllllllllllll
-                        fontSize={"sm"}
-                        fontWeight={600}
-                        color={"white"}
-                        href={"#"}
-                        top="0"
-                        onClick={modalOnOpen}
-                        colorScheme={"red"}
+                        <Button //modal log in button
+                            fontSize={"sm"}
+                            fontWeight={600}
+                            color={"white"}
+                            href={"#"}
+                            onClick={modalOnOpen}
+                            colorScheme={"red"}
                             bg={"red.400"}
+                            transition={"all .3s ease"}
                             _hover={{ bg: "red.500" }}
-                    >
-                        Login
-                    </Button>
+                        >
+                            Login
+                        </Button>
 
-                    {modalIsOpen && (
-                        <LogInModal
-                            isOpen={modalIsOpen}
-                            onClose={modalOnClose}
-                        />
-                    )}</Flex>
+                        {modalIsOpen && (
+                            <LogInModal
+                                isOpen={modalIsOpen}
+                                onClose={modalOnClose}
+                            />
+                        )}
+                    </Flex>
                 </Stack>
             </Flex>
 

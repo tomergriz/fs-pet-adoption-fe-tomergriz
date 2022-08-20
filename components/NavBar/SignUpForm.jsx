@@ -37,6 +37,7 @@ export default function SignUpForm({ onClose, toggle }) {
         setUserInfo({ ...userInfo, [name]: value });
     };
 
+
     const handleSignUp = async () => {
         try {
             const res = await axios.post(
@@ -49,8 +50,8 @@ export default function SignUpForm({ onClose, toggle }) {
         } catch (err) {
             console.log(err.response.data);
         }
-    };
 
+    };
     return (
         <>
             <HStack>
@@ -87,42 +88,49 @@ export default function SignUpForm({ onClose, toggle }) {
                     id="password"
                     onChange={handleChange}
                 />
-                <InputGroup>
-                    <InputRightElement h={"full"}>
-                        <Button
-                            mt={12}
-                            variant={"ghost"}
-                            onClick={() =>
-                                setShowPassword((showPassword) => !showPassword)
-                            }
-                        >
-                            {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                        </Button>
-                    </InputRightElement>
-                    <FormControl id="rePassword" isRequired>
-                        <FormLabel pt={4}>Re Password</FormLabel>
-                        <Input
-                            type={showPassword ? "text" : "password"}
-                            name="rePassword"
-                            id="rePassword"
-                            onChange={handleChange}
-                        />
-                    </FormControl>
-                </InputGroup>
+            </FormControl>
+            <InputGroup>
+                <InputRightElement h={"full"}>
+                    <Button
+                        pos={"absolute"}
+                        top={"-43"}
+                        variant={"ghost"}
+                        onClick={() =>
+                            setShowPassword((showPassword) => !showPassword)
+                        }
+                    >
+                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                </InputRightElement>
+            </InputGroup>
+            <FormControl id="rePassword" isRequired>
+                <FormLabel>Re Password</FormLabel>
+                <Input
+                    type={showPassword ? "text" : "password"}
+                    name="rePassword"
+                    id="rePassword"
+                    onChange={handleChange}
+                />
             </FormControl>
             <FormControl id="phone">
                 <FormLabel>Phone Number</FormLabel>
                 <Input type="phone" name="phone" onChange={handleChange} />
             </FormControl>
-            <Stack spacing={0} pt={2}>
+            <Stack spacing={1} pt={2}>
                 <Button
                     loadingText="Submitting"
-                    size="lg"
-                    bg={"blue.400"}
+                    disabled={
+                        userInfo.firstName === undefined ||
+                        userInfo.email === undefined ||
+                        userInfo.password == undefined ||
+                        userInfo.rePassword == undefined
+                    }
+                    fontSize={"sm"}
+                    fontWeight={600}
                     color={"white"}
-                    _hover={{
-                        bg: "blue.500",
-                    }}
+                    colorScheme={"red"}
+                    bg={"red.400"}
+                    _hover={{ bg: "red.500" }}
                     onClick={() => {
                         handleSignUp();
                         onClose();
@@ -130,8 +138,16 @@ export default function SignUpForm({ onClose, toggle }) {
                 >
                     Sign up
                 </Button>
-                <Stack pt={2}>
-                    <Text align={"center"} color={"blue.400"} onClick={toggle}>
+                <Stack>
+                    <Text
+                        align={"center"}
+                        color={"red.400"}
+                        onClick={toggle}
+                        as={"u"}
+                        cursor={"pointer"}
+                        transition={"all .3s ease"}
+                        _hover={{ color: "red.500" }}
+                    >
                         Already a user? Login
                     </Text>
                 </Stack>

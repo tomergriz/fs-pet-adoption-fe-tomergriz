@@ -25,13 +25,13 @@ import axios from "axios";
 
 export default function LogInForm({ onClose, toggle }) {
     const baseUrl = "http://localhost:8080";
-    const [usersList, setUsersList] = useState([]);
+    const [usersList, setUsersList] = useState({});
 
-    const [loginObject, setLoginObject] = useState({});
+    const [userInfo, setUserInfo] = useState({});
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
-        setLoginObject({ ...loginObject, [name]: value });
+        setUserInfo({ ...userInfo, [name]: value });
     };
 
     // const handleLogin = async () => {
@@ -46,7 +46,7 @@ export default function LogInForm({ onClose, toggle }) {
     // };
 
     const handleSubmit = async () => {
-        console.log("onSubmit:  ", loginObject);
+        console.log("onSubmit:  ", userInfo);
         // await handleLogin()
     };
 
@@ -64,15 +64,19 @@ export default function LogInForm({ onClose, toggle }) {
                     onChange={handleChange}
                 />
             </FormControl>
-            <Stack spacing={10}>
+            <Stack spacing={1}>
                 <Button
+                    disabled={
+                        userInfo.email === undefined ||
+                        userInfo.password === undefined
+                    }
                     loadingText="Submitting"
-                    size="lg"
-                    bg={"blue.400"}
+                    fontSize={"sm"}
+                    fontWeight={600}
                     color={"white"}
-                    _hover={{
-                        bg: "blue.500",
-                    }}
+                    colorScheme={"red"}
+                    bg={"red.400"}
+                    _hover={{ bg: "red.500" }}
                     onClick={() => {
                         handleSubmit();
                         onClose();
@@ -80,13 +84,14 @@ export default function LogInForm({ onClose, toggle }) {
                 >
                     Login
                 </Button>
-
                 <Text
                     align={"center"}
-                    color={"blue.400"}
+                    color={"red.400"}
                     onClick={toggle}
-                    _hover={{ color: "blue.500" }}
-                    _focus={{ boxShadow: "outline" }}
+                    as={"u"}
+                    cursor={"pointer"}
+                    transition={"all .3s ease"}
+                    _hover={{ color: "red.500" }}
                 >
                     Don't have an account? Sign up
                 </Text>
