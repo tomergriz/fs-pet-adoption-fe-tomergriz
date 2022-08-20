@@ -132,6 +132,7 @@ export default function SignBar() {
                             <MenuItem>Logout</MenuItem>
                         </MenuList>
                     </Menu>
+                    <Flex>
                     <Button //modallllllllllllllll
                         fontSize={"sm"}
                         fontWeight={600}
@@ -152,7 +153,7 @@ export default function SignBar() {
                             isOpen={modalIsOpen}
                             onClose={modalOnClose}
                         />
-                    )}
+                    )}</Flex>
                 </Stack>
             </Flex>
 

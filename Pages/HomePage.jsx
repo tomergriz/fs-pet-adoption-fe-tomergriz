@@ -16,7 +16,7 @@ import {
 
 export default function CallToActionWithVideo() {
   return (
-    <Container maxW={'7xl'}>
+    <Container maxWidth={'100vw'} minHeight={'90vh'} mb={'13px'}>
       <Stack
         align={'center'}
         spacing={{ base: 8, md: 10 }}
