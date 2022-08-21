@@ -35,7 +35,7 @@ export default function CallToActionWithVideo() {
                         </Text>
                         <br />
                         <Text as={"span"} color={"red.400"}>
-                            Because you'll save a life.
+                            You'll save a life.
                         </Text>
                     </Heading>
                     <Text color={"gray.500"}>
@@ -52,16 +52,17 @@ export default function CallToActionWithVideo() {
                         direction={{ base: "column", sm: "row" }}
                     >
                         <Button
+                            fontSize={"sm"}
+                            fontWeight={600}
                             as={NavLink}
                             to="/search"
                             title="search"
                             rounded={"full"}
                             size={"lg"}
-                            fontWeight={"normal"}
                             px={8}
                             colorScheme={"red"}
                             bg={"red.400"}
-                            _hover={{ bg: "red.500" }}
+                            _hover={{ bg: "red.500", color: "white" }}
                         >
                             Get started
                         </Button>
@@ -88,9 +89,10 @@ export default function CallToActionWithVideo() {
                             align={"center"}
                             w={"100%"}
                             h={"100%"}
-                            src={
-                                "https://www.k9franchise.com/wp-content/uploads/2020/03/Emotional-Industry.jpg"
-                            }
+                            src={useColorModeValue(
+                                "https://www.k9franchise.com/wp-content/uploads/2020/03/Emotional-Industry.jpg",
+                                "https://c4.wallpaperflare.com/wallpaper/755/310/505/black-cat-green-eyes-black-background-black-short-fur-cat-wallpaper-preview.jpg"
+                            )}
                         />
                     </Box>
                 </Flex>

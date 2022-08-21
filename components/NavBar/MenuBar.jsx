@@ -137,6 +137,7 @@ export default function SignBar() {
                             onClick={modalOnOpen}
                             colorScheme={"red"}
                             bg={"red.400"}
+                            border={"none"}
                             transition={"all .3s ease"}
                             _hover={{ bg: "red.500" }}
                         >
