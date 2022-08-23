@@ -1,18 +1,24 @@
 import {
     Container,
     Stack,
+    Flex,
+    Box,
     Heading,
     Text,
-
+    Button,
+    Image,
+    Icon,
+    IconButton,
+    createIcon,
+    useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import PetGrid from "../components/GridWithAddToCartButton/PetGrid";
-import PetCard from "../components/GridWithAddToCartButton/PetCard";
-import { pets } from "../components/GridWithAddToCartButton/_data";
+import AdminUsers from "../../components/Admin/AdminUsers";
 
-export default function Cards() {
+export default function AdminPage() {
     return (
-        <Container maxWidth={"100vw"} minHeight={"80.4vh"} mb={"13px"}>
+        <>
+                <Container maxWidth={"100vw"} minHeight={"80.4vh"} mb={"13px"}>
             <Stack
                 align={"center"}
                 spacing={{ base: 8, md: 10 }}
@@ -26,16 +32,14 @@ export default function Cards() {
                         fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
                     >
                         <Text as={"span"} color={"red.400"}>
-                            Search for Pet
+                            Users
                         </Text>
                     </Heading>
                 </Stack>
             </Stack>
-            <PetGrid>
-                {pets.map((product, index) => (
-                    <PetCard key={index} pet={product} />
-                ))}
-            </PetGrid>
+          
+            <AdminUsers />
         </Container>
+        </>
     );
 }

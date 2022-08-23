@@ -11,14 +11,14 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <ChakraProvider theme={theme}>
-            <BrowserRouter>
-                <Favicon url="img\favicon-32x32.ico" />
-                <ColorModeScript
-                    initialColorMode={theme.config.initialColorMode}
-                />
-                <App />
-            </BrowserRouter>
-        </ChakraProvider>
+            <ChakraProvider theme={theme}>
+                <BrowserRouter>
+                    <Favicon url="img\favicon-32x32.ico" />
+                    <ColorModeScript
+                        initialColorMode={theme.config.initialColorMode}
+                    />
+                    <App />
+                </BrowserRouter>
+            </ChakraProvider>
     </React.StrictMode>
 );

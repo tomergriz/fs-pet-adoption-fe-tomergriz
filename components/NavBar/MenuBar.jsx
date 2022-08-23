@@ -18,6 +18,9 @@ import {
     MenuDivider,
     useColorMode,
     Center,
+    PopoverTrigger,
+    Popover,
+    PopoverContent,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
@@ -27,11 +30,7 @@ import { NavLink } from "react-router-dom";
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
-    const {
-        isOpen: darkIsOpen,
-        onOpen: darkOnOpen,
-        onClose: darkOnClose,
-    } = useDisclosure();
+
     const {
         isOpen: modalIsOpen,
         onOpen: modalOnOpen,
@@ -124,7 +123,16 @@ export default function SignBar() {
                             </Center>
                             <br />
                             <MenuDivider />
-                            <MenuItem>Profile Settings</MenuItem>
+
+                            <MenuItem>
+                                <Link
+                                    as={NavLink}
+                                    to="/profile"
+                                    title="profile"
+                                >
+                                    Profile Settings
+                                </Link>
+                            </MenuItem>
                             <MenuItem>Logout</MenuItem>
                         </MenuList>
                     </Menu>
@@ -188,6 +196,7 @@ const DesktopNav = () => {
                             Home
                         </Text>
                     </Link>
+
                     <Link mr={5} as={NavLink} to="/search" title="search">
                         <Text
                             as={"span"}
@@ -196,6 +205,31 @@ const DesktopNav = () => {
                             fontWeight={500}
                         >
                             Search
+                        </Text>
+                    </Link>
+                    <Link mr={5} as={NavLink} to="/dashboard" title="dashboard">
+                        <Text
+                            as={"span"}
+                            transition={"all .3s ease"}
+                            _groupHover={{ color: "pink.400" }}
+                            fontWeight={500}
+                        >
+                            Dashboard
+                        </Text>
+                    </Link>
+                    <Link
+                        mr={5}
+                        as={NavLink}
+                        to="/AddPetPage"
+                        title="AddPetPage"
+                    >
+                        <Text
+                            as={"span"}
+                            transition={"all .3s ease"}
+                            _groupHover={{ color: "pink.400" }}
+                            fontWeight={500}
+                        >
+                            Add Pet
                         </Text>
                     </Link>
                 </Box>
@@ -234,6 +268,22 @@ const MobileNav = () => {
                             color={useColorModeValue("gray.600", "gray.200")}
                         >
                             Search
+                        </Text>
+                    </Link>
+                    <Link as={NavLink} to="/dashboard" title="dashboard">
+                        <Text
+                            fontWeight={600}
+                            color={useColorModeValue("gray.600", "gray.200")}
+                        >
+                            Dashboard
+                        </Text>
+                    </Link>
+                    <Link as={NavLink} to="/AddPetPage" title="AddPetPage">
+                        <Text
+                            fontWeight={600}
+                            color={useColorModeValue("gray.600", "gray.200")}
+                        >
+                            Add Pet
                         </Text>
                     </Link>
                 </Stack>

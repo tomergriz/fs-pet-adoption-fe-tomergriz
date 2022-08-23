@@ -37,7 +37,6 @@ export default function SignUpForm({ onClose, toggle }) {
         setUserInfo({ ...userInfo, [name]: value });
     };
 
-
     const handleSignUp = async () => {
         try {
             const res = await axios.post(
@@ -45,36 +44,31 @@ export default function SignUpForm({ onClose, toggle }) {
                 userInfo
             );
             if (res.data) {
-                console.log(userInfo);
+                console.log("res.data", res.data);
             }
         } catch (err) {
             console.log(err.response.data);
         }
-
     };
     return (
         <>
             <HStack>
-                <Box>
-                    <FormControl id="firstName" isRequired>
-                        <FormLabel>First Name</FormLabel>
-                        <Input
-                            type="text"
-                            name="firstName"
-                            onChange={handleChange}
-                        />
-                    </FormControl>
-                </Box>
-                <Box>
-                    <FormControl id="lastName">
-                        <FormLabel>Last Name</FormLabel>
-                        <Input
-                            type="text"
-                            name="lastName"
-                            onChange={handleChange}
-                        />
-                    </FormControl>
-                </Box>
+                <FormControl id="firstName" isRequired>
+                    <FormLabel>First Name</FormLabel>
+                    <Input
+                        type="text"
+                        name="firstName"
+                        onChange={handleChange}
+                    />
+                </FormControl>
+                <FormControl id="lastName">
+                    <FormLabel>Last Name</FormLabel>
+                    <Input
+                        type="text"
+                        name="lastName"
+                        onChange={handleChange}
+                    />
+                </FormControl>
             </HStack>
             <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>

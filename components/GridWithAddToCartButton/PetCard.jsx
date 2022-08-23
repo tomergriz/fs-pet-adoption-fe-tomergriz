@@ -18,24 +18,22 @@ import { FavoriteButton } from "./FavoriteButton";
 import { NavLink } from "react-router-dom";
 
 export default function PetCard(props) {
-    const { product, rootProps } = props;
-    const { picture, name } = product;
+    const { pet, rootProps } = props;
+    const { picture, name } = pet;
     return (
         <Stack
-            as={"NavLink"}
+            // as={"NavLink"}
             rounded={"2xl"}
             boxShadow={"2xl"}
             transition={"all .3s ease"}
             cursor={"pointer"}
-            _hover={{ bg: "pink.100" }}
+            _hover={{ bg: useColorModeValue( "pink.100", "pink.900" )}}
             p={2}
             borderRadius={useBreakpointValue({
                 base: "md",
                 md: "xl",
             })}
-            border={1}
-            borderStyle={"solid"}
-            borderColor={useColorModeValue("gray.200", "gray.900")}
+            bg={useColorModeValue("gray.200", "gray.700")}
             spacing={useBreakpointValue({
                 base: "4",
                 md: "5",
