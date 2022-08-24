@@ -29,12 +29,12 @@ export default function AdminUsers() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {users.map((user) => (
+                        {users.map((user, index) => (
                             <Tr>
-                                <Td>{user.email}</Td>
-                                <Td>{user.firstName}</Td>
-                                <Td>{user.lastName}</Td>
-                                <Td>{user.phone}</Td>
+                                <Td key={user.index}>{user.email} </Td>
+                                <Td key={user.index}>{user.firstName}</Td>
+                                <Td key={user.index}>{user.lastName}</Td>
+                                <Td key={user.index}>{user.phone}</Td>
                             </Tr>
                         ))}
                     </Tbody>

@@ -31,6 +31,7 @@ import axios from "axios";
 export default function SignUpForm({ onClose, toggle }) {
     const [showPassword, setShowPassword] = useState(false);
     const [userInfo, setUserInfo] = useState({});
+    const [errorMassage , setErrorMassage] = useState(null)
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -45,9 +46,10 @@ export default function SignUpForm({ onClose, toggle }) {
             );
             if (res.data) {
                 console.log("res.data", res.data);
+                onClose();
             }
         } catch (err) {
-            console.log(err.response.data);
+            setErrorMassage(err.response.data.message !== undefined ? err.response.data.message : err.response.data)
         }
     };
     return (
@@ -111,6 +113,7 @@ export default function SignUpForm({ onClose, toggle }) {
                 <Input type="phone" name="phone" onChange={handleChange} />
             </FormControl>
             <Stack spacing={1} pt={2}>
+                <Text color={"red"}>{errorMassage}</Text>
                 <Button
                     loadingText="Submitting"
                     disabled={
@@ -127,7 +130,6 @@ export default function SignUpForm({ onClose, toggle }) {
                     _hover={{ bg: "red.500" }}
                     onClick={() => {
                         handleSignUp();
-                        onClose();
                     }}
                 >
                     Sign up
