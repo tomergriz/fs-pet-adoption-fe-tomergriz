@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
 export const UserContext = createContext("");
 export const useUserContext = () => {
@@ -6,22 +6,22 @@ export const useUserContext = () => {
 };
 
 export default function UserContextProvider(props) {
-    const baseUrl = "http://localhost:8080/users";
-    const [users, setUsers] = useState([]);
+    // const SERVER_URL = process.env.REACT_APP_SERVER_URL;
+    const SERVER_URL = "http://localhost:8080";
 
-    const loadUsers = async () => {
-        try {
-            const res = await axios.get(`${baseUrl}/all`);
-            setUsers(res.data);
-        } catch (err) {}
-    };
+    const [currentUser, setCurrentUser] = useState({});
 
     useEffect(() => {
-        loadUsers();
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) {
+            setCurrentUser(user);
+        }
     }, []);
 
     return (
-        <UserContext.Provider value={{ users }}>
+        <UserContext.Provider
+            value={{ SERVER_URL, currentUser, setCurrentUser }}
+        >
             {props.children}
         </UserContext.Provider>
     );

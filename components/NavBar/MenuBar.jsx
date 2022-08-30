@@ -23,19 +23,26 @@ import {
     PopoverContent,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import LogInModal from "./LogInModal";
 import { NavLink } from "react-router-dom";
+import { useUserContext } from "../../context/UserContext";
 
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
+    const { currentUser, setCurrentUser } = useUserContext();
 
     const {
         isOpen: modalIsOpen,
         onOpen: modalOnOpen,
         onClose: modalOnClose,
     } = useDisclosure();
+
+    function handleLogout() {
+        setCurrentUser({});
+        window.localStorage.removeItem("user");
+    }
 
     return (
         <Box>
@@ -96,47 +103,54 @@ export default function SignBar() {
                         {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                     </Link>
 
-                    <Menu>
-                        <MenuButton
-                            as={Button}
-                            rounded={"full"}
-                            variant={"link"}
-                            cursor={"pointer"}
-                            minW={0}
-                        >
-                            <Avatar
-                                size={"sm"}
-                                src={"https://bit.ly/ryan-florence"}
-                            />
-                        </MenuButton>
-                        <MenuList alignItems={"center"}>
-                            <br />
-                            <Center>
+                    {currentUser?.token && ( //user Profile
+                        <Menu>
+                            <MenuButton
+                                as={Button}
+                                rounded={"full"}
+                                variant={"link"}
+                                cursor={"pointer"}
+                                minW={0}
+                            >
                                 <Avatar
-                                    size={"2xl"}
+                                    size={"sm"}
                                     src={"https://bit.ly/ryan-florence"}
                                 />
-                            </Center>
-                            <br />
-                            <Center>
-                                <p>Username</p>
-                            </Center>
-                            <br />
-                            <MenuDivider />
+                            </MenuButton>
+                            <MenuList alignItems={"center"}>
+                                <br />
+                                <Center>
+                                    <Avatar
+                                        size={"2xl"}
+                                        src={"https://bit.ly/ryan-florence"}
+                                    />
+                                </Center>
+                                <br />
+                                <Center>
+                                    <p>
+                                        {currentUser.firstName}{" "}
+                                        {currentUser.lastName}
+                                    </p>
+                                </Center>
+                                <br />
+                                <MenuDivider />
 
-                            <MenuItem>
-                                <Link
-                                    as={NavLink}
-                                    to="/profile"
-                                    title="profile"
-                                >
-                                    Profile Settings
-                                </Link>
-                            </MenuItem>
-                            <MenuItem>Logout</MenuItem>
-                        </MenuList>
-                    </Menu>
-                    <Flex>
+                                <MenuItem>
+                                    <Link
+                                        as={NavLink}
+                                        to="/profile"
+                                        title="profile"
+                                    >
+                                        Profile Settings
+                                    </Link>
+                                </MenuItem>
+                                <MenuItem onClick={handleLogout}>
+                                    Logout
+                                </MenuItem>
+                            </MenuList>
+                        </Menu>
+                    )}
+                  {!currentUser?.token && <Flex>
                         <Button //modal log in button
                             fontSize={"sm"}
                             fontWeight={600}
@@ -158,7 +172,7 @@ export default function SignBar() {
                                 onClose={modalOnClose}
                             />
                         )}
-                    </Flex>
+                    </Flex> }
                 </Stack>
             </Flex>
 

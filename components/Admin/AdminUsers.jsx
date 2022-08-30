@@ -9,12 +9,26 @@ import {
     TableCaption,
     TableContainer,
 } from "@chakra-ui/react";
-import UserContext from "../../context/UserContext";
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useUserContext } from "../../context/UserContext";
+import axios from "axios";
+
 export default function AdminUsers() {
-    const { firstName, users } = useUserContext();
-    // console.log("suers", users[0].name);
+    const { SERVER_URL } = useUserContext();
+    const [users, setUsers] = useState([]);
+
+    const loadUsers = async () => {
+        try {
+            const res = await axios.get(`${SERVER_URL}/users/all`);
+            setUsers(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    useEffect(() => {
+        loadUsers();
+    }, []);
 
     return (
         <>
@@ -29,12 +43,12 @@ export default function AdminUsers() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {users.map((user, index) => (
-                            <Tr>
-                                <Td key={user.index}>{user.email} </Td>
-                                <Td key={user.index}>{user.firstName}</Td>
-                                <Td key={user.index}>{user.lastName}</Td>
-                                <Td key={user.index}>{user.phone}</Td>
+                        {users.map((user) => (
+                            <Tr key={user._id}>
+                                <Td>{user.email} </Td>
+                                <Td>{user.firstName}</Td>
+                                <Td>{user.lastName}</Td>
+                                <Td>{user.phone}</Td>
                             </Tr>
                         ))}
                     </Tbody>

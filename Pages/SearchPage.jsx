@@ -9,6 +9,8 @@ import React from "react";
 import PetGrid from "../components/GridWithAddToCartButton/PetGrid";
 import PetCard from "../components/GridWithAddToCartButton/PetCard";
 import { pets } from "../components/GridWithAddToCartButton/_data";
+import { v4 as uuidv4 } from 'uuid';
+
 
 export default function Cards() {
     return (
@@ -32,8 +34,8 @@ export default function Cards() {
                 </Stack>
             </Stack>
             <PetGrid>
-                {pets.map((product, index) => (
-                    <PetCard key={index} pet={product} />
+                {pets.map((product) => (
+                    <PetCard key={uuidv4()} pet={product} />
                 ))}
             </PetGrid>
         </Container>

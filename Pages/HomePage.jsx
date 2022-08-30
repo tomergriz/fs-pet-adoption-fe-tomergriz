@@ -14,8 +14,11 @@ import {
 } from "@chakra-ui/react";
 
 import { NavLink } from "react-router-dom";
+import { useUserContext } from "../context/UserContext"
 
 export default function CallToActionWithVideo() {
+    const { currentUser } = useUserContext();
+
     return (
         <Container maxWidth={"100vw"} minHeight={"80.4vh"} mb={"13px"}>
             <Stack
@@ -31,7 +34,7 @@ export default function CallToActionWithVideo() {
                         fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
                     >
                         <Text as={"span"} position={"relative"}>
-                            Adopt A Pet.
+                            Hello {currentUser.firstName} <br/>Adopt A Pet.
                         </Text>
                         <br />
                         <Text as={"span"} color={"red.400"}>
