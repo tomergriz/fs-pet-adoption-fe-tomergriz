@@ -10,6 +10,8 @@ export default function UserContextProvider(props) {
     const SERVER_URL = "http://localhost:8080";
 
     const [currentUser, setCurrentUser] = useState({});
+    const isLoggedIn = currentUser !== null;
+
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
@@ -20,7 +22,7 @@ export default function UserContextProvider(props) {
 
     return (
         <UserContext.Provider
-            value={{ SERVER_URL, currentUser, setCurrentUser }}
+            value={{ SERVER_URL, currentUser, setCurrentUser, isLoggedIn }}
         >
             {props.children}
         </UserContext.Provider>
