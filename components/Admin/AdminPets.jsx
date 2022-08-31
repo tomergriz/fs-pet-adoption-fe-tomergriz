@@ -9,27 +9,12 @@ import {
     TableCaption,
     TableContainer,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useUserContext } from "../../context/UserContext";
-import axios from "axios";
+import { usePetContext } from "../../context/PetContext";
 
 export default function AdminPets() {
-    const { SERVER_URL } = useUserContext();
-    const [pets, setPets] = useState([]);
-
-    const loadPets = async () => {
-        try {
-            const res = await axios.get(`${SERVER_URL}/pets/all`);
-            setPets(res.data);
-            console.log(pets);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        loadPets();
-    }, []);
+    const { pets } = usePetContext();
 
     return (
         <>
@@ -45,7 +30,7 @@ export default function AdminPets() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {pets.map((pet) => (
+                        {pets.length > 0 && pets.map((pet) => (
                             <Tr key={pet._id}>
                                 <Td>{pet.type} </Td>
                                 <Td>{pet.name}</Td>

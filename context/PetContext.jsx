@@ -6,28 +6,27 @@ export const usePetContext = () => {
 };
 
 export default function PetContextProvider(props) {
+    const SERVER_URL = "http://localhost:8080";
+
     const [pets, setPets] = useState({});
-    const [petErrMassage, setErrMassage] = useState({});
+
 
     const loadPets = async () => {
-        console.log("sdsdsd");
         try {
             const res = await axios.get(`${SERVER_URL}/pets/all`);
             setPets(res.data);
-            console.log(pets);
         } catch (err) {
-            setErrMassage(err.petErrMassage);
             console.log(err);
         }
     };
 
     useEffect(() => {
-        loadPets()
+        loadPets();
     }, []);
 
     return (
-        <PetsContext.Provider value={{ pets, setPets, petErrMassage }}>
+        <PetContext.Provider value={{ pets }}>
             {props.children}
-        </PetsContext.Provider>
+        </PetContext.Provider>
     );
 }

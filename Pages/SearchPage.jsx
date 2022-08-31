@@ -1,31 +1,12 @@
 import { Container, Stack, Heading, Text } from "@chakra-ui/react";
-import React, { useContext, useState,useEffect } from "react";
+import React from "react";
 import PetGrid from "../components/GridWithAddToCartButton/PetGrid";
 import PetCard from "../components/GridWithAddToCartButton/PetCard";
-import { pets } from "../components/GridWithAddToCartButton/_data";
 import { v4 as uuidv4 } from "uuid";
-import axios from "axios"
-import { useUserContext } from "../context/UserContext";
 import { usePetContext } from "../context/PetContext";
 
 export default function Cards() {
-    const { SERVER_URL } = useUserContext();
-    // const { pets, setPets, petErrMassage } = usePetContext();
-    const [pets, setPets] = useState([]);
-
-    const loadPets = async () => {
-        try {
-            const res = await axios.get(`${SERVER_URL}/pets/all`);
-            setPets(res.data);
-            console.log(pets);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        loadPets();
-    }, []);
+    const { pets } = usePetContext();
 
     return (
         <Container maxWidth={"100vw"} minHeight={"80.4vh"} mb={"13px"}>
@@ -48,8 +29,8 @@ export default function Cards() {
                 </Stack>
             </Stack>
             <PetGrid>
-                {pets.map((product) => (
-                    <PetCard key={uuidv4()} pet={product} />
+                {pets.length >0 && pets.map((pet) => (
+                    <PetCard key={uuidv4()} pet={pet} />
                 ))}
             </PetGrid>
         </Container>

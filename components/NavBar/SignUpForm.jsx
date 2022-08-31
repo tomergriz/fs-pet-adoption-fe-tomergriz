@@ -49,6 +49,7 @@ export default function SignUpForm({ onClose, toggle }) {
                 onClose();
             }
         } catch (err) {
+            console.log(err);
             setErrorMassage(err.response.data.message !== undefined ? err.response.data.message : err.response.data)
         }
     };

@@ -9,26 +9,11 @@ import {
     TableCaption,
     TableContainer,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useUserContext } from "../../context/UserContext";
-import axios from "axios";
 
 export default function AdminUsers() {
-    const { SERVER_URL } = useUserContext();
-    const [users, setUsers] = useState([]);
-
-    const loadUsers = async () => {
-        try {
-            const res = await axios.get(`${SERVER_URL}/users/all`);
-            setUsers(res.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        loadUsers();
-    }, []);
+    const { users } = useUserContext();
 
     return (
         <>
@@ -43,7 +28,7 @@ export default function AdminUsers() {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {users.map((user) => (
+                        {users.length >0 && users.map((user) => (
                             <Tr key={user._id}>
                                 <Td>{user.email} </Td>
                                 <Td>{user.firstName}</Td>

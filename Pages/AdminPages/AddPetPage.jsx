@@ -15,6 +15,7 @@ import {
     Container,
     Stack,
     Checkbox,
+    Select,
     Link,
     HStack,
     InputGroup,
@@ -30,21 +31,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function AddPetPage({ onClose, toggle }) {
-    const [showPassword, setShowPassword] = useState(false);
-    const [userInfo, setUserInfo] = useState({});
+    const [petInfo, setPetInfo] = useState({});
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
-        setUserInfo({ ...userInfo, [name]: value });
-        console.log(userInfo.phone);
-        console.log(validation.isNumber(userInfo.phone));
+        setPetInfo({ ...petInfo, [name]: value });
+
+        console.log(petInfo);
     };
 
     const handleSignUp = async () => {
         try {
             const res = await axios.post(
-                "http://localhost:8080/users/signup",
-                userInfo
+                "http://localhost:8080/pets/pet",
+                petInfo
             );
             if (res.data) {
                 console.log("res.data", res.data);
@@ -87,7 +87,7 @@ export default function AddPetPage({ onClose, toggle }) {
                                 />
                             </FormControl>
 
-                            <FormControl id="name">
+                            <FormControl id="name" isRequired>
                                 <FormLabel>Name</FormLabel>
                                 <Input
                                     type="text"
@@ -96,57 +96,82 @@ export default function AddPetPage({ onClose, toggle }) {
                                 />
                             </FormControl>
                         </HStack>
-                        <FormControl id="email" isRequired>
-                            <FormLabel>Email address</FormLabel>
+                        <HStack>
+                            <FormControl id="height">
+                                <FormLabel>Height</FormLabel>
+                                <Input
+                                    type="number"
+                                    name="height"
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+
+                            <FormControl id="weight">
+                                <FormLabel>Weight</FormLabel>
+                                <Input
+                                    type="text"
+                                    name="weight"
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </HStack>
+                        <HStack>
+                            <FormControl id="color">
+                                <FormLabel>Color</FormLabel>
+                                <Input
+                                    type="text"
+                                    name="color"
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+
+                            <FormControl id="breed">
+                                <FormLabel>Breed</FormLabel>
+                                <Input
+                                    type="text"
+                                    name="breed"
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+                        </HStack>
+                        <HStack>
+                            <FormControl id="hypoallergnic">
+                                <FormLabel>Hypoallergnic</FormLabel>
+                                <Input
+                                    type="text"
+                                    name="hypoallergnic"
+                                    onChange={handleChange}
+                                />
+                            </FormControl>
+
+                            <FormControl id="adoptionStatus">
+                                <FormLabel>Adoption Status</FormLabel>
+                                <Select name="adoptionStatus" onChange={handleChange}>
+                                    <option></option>
+                                    <option>Nigeria</option>
+                                    <option>Nigeria</option>
+                                    <option>Nigeria</option>
+                                </Select>
+                                {/* <Input
+                                    type="text"
+                                    name="adoptionStatus"
+                                    onChange={handleChange}
+                                /> */}
+                            </FormControl>
+                        </HStack>
+                        <FormControl id="bio">
+                            <FormLabel>Bio</FormLabel>
                             <Input
                                 type="email"
-                                name="email"
+                                name="bio"
                                 onChange={handleChange}
                             />
                         </FormControl>
-                        <FormControl id="password" isRequired>
-                            <FormLabel>Password</FormLabel>
+                        <FormControl id="picture">
+                            <FormLabel>Picture</FormLabel>
                             <Input
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                id="password"
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                        <InputGroup>
-                            <InputRightElement h={"full"}>
-                                <Button
-                                    pos={"absolute"}
-                                    top={"-43"}
-                                    variant={"ghost"}
-                                    onClick={() =>
-                                        setShowPassword(
-                                            (showPassword) => !showPassword
-                                        )
-                                    }
-                                >
-                                    {showPassword ? (
-                                        <ViewIcon />
-                                    ) : (
-                                        <ViewOffIcon />
-                                    )}
-                                </Button>
-                            </InputRightElement>
-                        </InputGroup>
-                        <FormControl id="rePassword" isRequired>
-                            <FormLabel>Re Password</FormLabel>
-                            <Input
-                                type={showPassword ? "text" : "password"}
-                                name="rePassword"
-                                id="rePassword"
-                                onChange={handleChange}
-                            />
-                        </FormControl>
-                        <FormControl id="phone">
-                            <FormLabel>Phone Number</FormLabel>
-                            <Input
-                                type="phone"
-                                name="phone"
+                                type="text"
+                                name="picture"
                                 onChange={handleChange}
                             />
                         </FormControl>
@@ -154,10 +179,8 @@ export default function AddPetPage({ onClose, toggle }) {
                             <Button
                                 loadingText="Submitting"
                                 disabled={
-                                    userInfo.firstName === undefined ||
-                                    userInfo.email === undefined ||
-                                    userInfo.password == undefined ||
-                                    userInfo.rePassword == undefined
+                                    petInfo.type === undefined ||
+                                    petInfo.name === undefined
                                 }
                                 fontSize={"sm"}
                                 fontWeight={600}
