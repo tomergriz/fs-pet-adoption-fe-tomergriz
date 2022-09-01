@@ -29,6 +29,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 export default function ProfilePage({ onClose, toggle }) {
     const [showPassword, setShowPassword] = useState(false);
     const [userInfo, setUserInfo] = useState({});
@@ -72,7 +73,6 @@ export default function ProfilePage({ onClose, toggle }) {
                         </Heading>
                     </Stack>
                 </Stack>
-
                 <Flex>
                     <FormControl>
                         <HStack>

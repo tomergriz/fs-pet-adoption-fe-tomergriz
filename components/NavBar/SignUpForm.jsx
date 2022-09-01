@@ -111,7 +111,7 @@ export default function SignUpForm({ onClose, toggle }) {
             </FormControl>
             <FormControl id="phone">
                 <FormLabel>Phone Number</FormLabel>
-                <Input type="phone" name="phone" onChange={handleChange} />
+                <Input type="number" name="phone" onChange={handleChange} />
             </FormControl>
             <Stack spacing={1} pt={2}>
                 <Text color={"red"}>{errorMassage}</Text>

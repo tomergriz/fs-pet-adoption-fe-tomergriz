@@ -32,12 +32,11 @@ import axios from "axios";
 
 export default function AddPetPage({ onClose, toggle }) {
     const [petInfo, setPetInfo] = useState({});
+    const [errorMassage, setErrorMassage] = useState("");
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
         setPetInfo({ ...petInfo, [name]: value });
-
-        console.log(petInfo);
     };
 
     const handleSignUp = async () => {
@@ -48,9 +47,11 @@ export default function AddPetPage({ onClose, toggle }) {
             );
             if (res.data) {
                 console.log("res.data", res.data);
+                setErrorMassage("");
             }
         } catch (err) {
-            console.log(err.response.data);
+            console.log(err);
+            setErrorMassage(err.response.data || "Internal Server Error");
         }
     };
     return (
@@ -137,26 +138,25 @@ export default function AddPetPage({ onClose, toggle }) {
                         <HStack>
                             <FormControl id="hypoallergnic">
                                 <FormLabel>Hypoallergnic</FormLabel>
-                                <Input
-                                    type="text"
+                                <Select
                                     name="hypoallergnic"
                                     onChange={handleChange}
-                                />
+                                >
+                                    <option>false</option>
+                                    <option>true</option>
+                                </Select>
                             </FormControl>
 
                             <FormControl id="adoptionStatus">
                                 <FormLabel>Adoption Status</FormLabel>
-                                <Select name="adoptionStatus" onChange={handleChange}>
-                                    <option></option>
-                                    <option>Nigeria</option>
-                                    <option>Nigeria</option>
-                                    <option>Nigeria</option>
-                                </Select>
-                                {/* <Input
-                                    type="text"
+                                <Select
                                     name="adoptionStatus"
                                     onChange={handleChange}
-                                /> */}
+                                >
+                                    <option>Available</option>
+                                    <option>Adopted</option>
+                                    <option>Fostered</option>
+                                </Select>
                             </FormControl>
                         </HStack>
                         <FormControl id="bio">
@@ -176,6 +176,7 @@ export default function AddPetPage({ onClose, toggle }) {
                             />
                         </FormControl>
                         <Stack spacing={1} pt={2}>
+                            <Text color={"red"}>{errorMassage}</Text>
                             <Button
                                 loadingText="Submitting"
                                 disabled={
@@ -190,7 +191,6 @@ export default function AddPetPage({ onClose, toggle }) {
                                 _hover={{ bg: "red.500" }}
                                 onClick={() => {
                                     handleSignUp();
-                                    onClose();
                                 }}
                             >
                                 Update Details
