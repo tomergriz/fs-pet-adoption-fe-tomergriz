@@ -14,6 +14,8 @@ import Page404 from "../Pages/Page404";
 import PrivateRoute from "../components/PrivateRoute";
 import UnauthorisedPage from "../Pages/UnauthorisedPage ";
 import PetContextProvider from "../context/PetContext";
+import MyPets from "../Pages/MyPets";
+import PetCardPage from "../Pages/PetCardPage";
 
 function App() {
     const baseUrl = "http://localhost:8080";
@@ -36,12 +38,20 @@ function App() {
                                     </PrivateRoute>
                                 }
                             />
-
+                            <Route
+                                path="/mypets"
+                                element={
+                                    <PrivateRoute>
+                                        <MyPets />
+                                    </PrivateRoute>
+                                }
+                            />
                             <Route path="/Dashboard" element={<Dashboard />} />
                             <Route
                                 path="/AddPetPage"
                                 element={<AddPetPage />}
                             />
+                            <Route path="/pet/:id" element={<PetCardPage/>} />
                             <Route
                                 path="/Unuthorised"
                                 element={<UnauthorisedPage />}

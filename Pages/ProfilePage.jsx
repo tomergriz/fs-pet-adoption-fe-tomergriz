@@ -28,7 +28,7 @@ import React, { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import SignUpForm from "../components/NavBar/SignUpForm";
 
 export default function ProfilePage({ onClose, toggle }) {
     const [showPassword, setShowPassword] = useState(false);
@@ -67,14 +67,16 @@ export default function ProfilePage({ onClose, toggle }) {
                             fontWeight={600}
                             fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
                         >
-                            <Text as={"span"}  color={"red.400"}>
+                            <Text as={"span"} color={"red.400"}>
                                 Profile
                             </Text>
                         </Heading>
                     </Stack>
                 </Stack>
+                    <SignUpForm />
                 <Flex>
-                    <FormControl>
+
+                    {/* <FormControl>
                         <HStack>
                             <FormControl id="firstName" isRequired>
                                 <FormLabel>First Name</FormLabel>
@@ -113,23 +115,23 @@ export default function ProfilePage({ onClose, toggle }) {
                         </FormControl>
                         <InputGroup>
                             <InputRightElement h={"full"}>
-                                    <Button
-                                        pos={"absolute"}
-                                        top={"-43"}
-                                        variant={"ghost"}
-                                        onClick={() =>
-                                            setShowPassword(
-                                                (showPassword) => !showPassword
-                                            )
-                                        }
-                                    >
-                                        {showPassword ? (
-                                            <ViewIcon />
-                                        ) : (
-                                            <ViewOffIcon />
-                                        )}
-                                    </Button>
-                                </InputRightElement>
+                                <Button
+                                    pos={"absolute"}
+                                    top={"-43"}
+                                    variant={"ghost"}
+                                    onClick={() =>
+                                        setShowPassword(
+                                            (showPassword) => !showPassword
+                                        )
+                                    }
+                                >
+                                    {showPassword ? (
+                                        <ViewIcon />
+                                    ) : (
+                                        <ViewOffIcon />
+                                    )}
+                                </Button>
+                            </InputRightElement>
                         </InputGroup>
                         <FormControl id="rePassword" isRequired>
                             <FormLabel>Re Password</FormLabel>
@@ -171,7 +173,7 @@ export default function ProfilePage({ onClose, toggle }) {
                                 Update Details
                             </Button>
                         </Stack>
-                    </FormControl>
+                    </FormControl> */}
                 </Flex>
 
                 {/* </Flex> */}

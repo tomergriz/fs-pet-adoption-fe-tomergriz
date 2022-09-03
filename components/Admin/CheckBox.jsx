@@ -1,32 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Checkbox, CheckboxGroup } from "@chakra-ui/react";
 import { useUserContext } from "../../context/UserContext";
 import axios from "axios";
 
 export default function CheckBox({ user }) {
-    
+    const { SERVER_URL } = useUserContext();
+
     async function handleChange(e) {
         try {
-            const res = await axios.put(
-                `http://localhost:8080/users/6310594b274a974abe57aa7c`,
-                { ...user, isAdmin: e.target.checked }
-            );
+            // user = { ...user, isAdmin: e.target.checked };
+            // console.log("e.target.checked", e.target.checked);
+            // console.log("user", user);
+
+            const url = `${SERVER_URL}/users/${user._id}`;
+            const res = await axios.put(url, {
+                ...user,
+                isAdmin: e.target.checked,
+            });
             if (res) {
-                const updatedUser = res.data;
-                console.log("res.data", res.data);
+                console.log('res', res);
             }
         } catch (err) {
             console.log(err);
         }
     }
 
-
     return (
         <Checkbox
-            name={user._id}
-            onChange={handleChange}
+            name="checkBox"
             colorScheme="cyan"
             isChecked={user.isAdmin}
+            onChange={handleChange}
         ></Checkbox>
     );
 }

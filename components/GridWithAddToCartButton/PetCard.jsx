@@ -19,15 +19,17 @@ import { NavLink } from "react-router-dom";
 
 export default function PetCard(props) {
     const { pet, rootProps } = props;
-    const { picture, name } = pet;
+    const { picture, name, _id } = pet;
+
     return (
         <Stack
-            // as={"NavLink"}
+            as={NavLink}
+            to={`/pet/${_id}`}
             rounded={"2xl"}
             boxShadow={"2xl"}
             transition={"all .3s ease"}
             cursor={"pointer"}
-            _hover={{ bg: useColorModeValue( "pink.100", "pink.900" )}}
+            _hover={{ bg: useColorModeValue("pink.100", "pink.900") }}
             p={2}
             borderRadius={useBreakpointValue({
                 base: "md",
@@ -77,6 +79,7 @@ export default function PetCard(props) {
                     align="center"
                 >
                     <Button
+                        as={Text}
                         fontSize={"sm"}
                         fontWeight={600}
                         color={"white"}
@@ -86,17 +89,17 @@ export default function PetCard(props) {
                         transition={"all .3s ease"}
                         _hover={{ bg: "red.500" }}
                     >
-                        Adopt
+                        Adopted
                     </Button>
                     <Text
                         fontSize={"sm"}
                         fontWeight={400}
                         variant={"link"}
                         color={useColorModeValue("gray.700", "gray.400")}
-                        href={"#"}
                         colorScheme={"red"}
                         p={2}
                         transition={"all .3s ease"}
+                        to={`pets/${_id}`}
                     >
                         See More
                     </Text>

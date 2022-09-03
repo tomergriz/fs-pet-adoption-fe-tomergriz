@@ -44,6 +44,7 @@ export default function SignBar() {
         window.localStorage.removeItem("user");
     }
 
+
     return (
         <Box>
             <Flex
@@ -84,7 +85,7 @@ export default function SignBar() {
                     justify={{ base: "center", md: "start" }}
                 >
                     <Flex display={{ base: "none", md: "flex" }} ml={5}>
-                        <DesktopNav />
+                        <DesktopNav currentUser={currentUser}/>
                     </Flex>
                 </Flex>
 
@@ -150,42 +151,46 @@ export default function SignBar() {
                             </MenuList>
                         </Menu>
                     )}
-                  {!currentUser?.token && <Flex>
-                        <Button //modal log in button
-                            fontSize={"sm"}
-                            fontWeight={600}
-                            color={"white"}
-                            href={"#"}
-                            onClick={modalOnOpen}
-                            colorScheme={"red"}
-                            bg={"red.400"}
-                            border={"none"}
-                            transition={"all .3s ease"}
-                            _hover={{ bg: "red.500" }}
-                        >
-                            Login
-                        </Button>
+                    {!currentUser?.token && (
+                        <Flex>
+                            <Button //modal log in button
+                                fontSize={"sm"}
+                                fontWeight={600}
+                                color={"white"}
+                                href={"#"}
+                                onClick={modalOnOpen}
+                                colorScheme={"red"}
+                                bg={"red.400"}
+                                border={"none"}
+                                transition={"all .3s ease"}
+                                _hover={{ bg: "red.500" }}
+                            >
+                                Login
+                            </Button>
 
-                        {modalIsOpen && (
-                            <LogInModal
-                                isOpen={modalIsOpen}
-                                onClose={modalOnClose}
-                            />
-                        )}
-                    </Flex> }
+                            {modalIsOpen && (
+                                <LogInModal
+                                    isOpen={modalIsOpen}
+                                    onClose={modalOnClose}
+                                />
+                            )}
+                        </Flex>
+                    )}
                 </Stack>
             </Flex>
 
             <Collapse in={isOpen} animateOpacity>
-                <MobileNav />
+                <MobileNav currentUser={currentUser} />
             </Collapse>
         </Box>
     );
 }
 
-const DesktopNav = () => {
+const DesktopNav = (currentUser) => {
     const linkColor = useColorModeValue("gray.600", "gray.200");
     const linkHoverColor = useColorModeValue("gray.800", "white");
+
+    // console.log(currentUser.currentUser.token);
 
     return (
         <Stack direction={"row"} spacing={4}>
@@ -221,6 +226,17 @@ const DesktopNav = () => {
                             Search
                         </Text>
                     </Link>
+                    {currentUser?.currentUser?.token && (<Link mr={5} as={NavLink} to="/mypets" title="mypets">
+                            <Text
+                                as={"span"}
+                                transition={"all .3s ease"}
+                                _groupHover={{ color: "pink.400" }}
+                                fontWeight={500}
+                            >
+                                My Pets
+                            </Text>
+                        </Link>
+                    )}
                     <Link mr={5} as={NavLink} to="/dashboard" title="dashboard">
                         <Text
                             as={"span"}
@@ -252,7 +268,8 @@ const DesktopNav = () => {
     );
 };
 
-const MobileNav = () => {
+const MobileNav = (currentUser) => {
+
     return (
         <Container
             bg={useColorModeValue("white", "gray.800")}
@@ -284,6 +301,14 @@ const MobileNav = () => {
                             Search
                         </Text>
                     </Link>
+                 { currentUser?.currentUser?.token && (<Link as={NavLink} to="/mypets" title="mypets">
+                        <Text
+                            fontWeight={600}
+                            color={useColorModeValue("gray.600", "gray.200")}
+                        >
+                            My Pets
+                        </Text>
+                    </Link>)}
                     <Link as={NavLink} to="/dashboard" title="dashboard">
                         <Text
                             fontWeight={600}

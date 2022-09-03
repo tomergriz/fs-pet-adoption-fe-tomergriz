@@ -10,7 +10,7 @@ function PrivateRoute({ children }) {
     // If not logged in - redirect
 useEffect(() => {
     if (!currentUser?.token) {
-        return navigate('/Unuthorised');
+        return navigate('/');
     }
 }, [currentUser])
 

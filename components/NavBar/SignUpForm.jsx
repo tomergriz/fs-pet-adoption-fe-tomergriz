@@ -21,38 +21,63 @@ import {
     Button,
     Heading,
     Text,
+    Tooltip,
     useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUserContext } from "../../context/UserContext";
 
 export default function SignUpForm({ onClose, toggle }) {
     const [showPassword, setShowPassword] = useState(false);
     const [userInfo, setUserInfo] = useState({});
-    const [errorMassage , setErrorMassage] = useState(null)
+    const [errorMassage, setErrorMassage] = useState(null);
+    const { SERVER_URL, currentUser } = useUserContext();
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
         setUserInfo({ ...userInfo, [name]: value });
     };
-
-    const handleSignUp = async () => {
-        try {
-            const res = await axios.post(
-                "http://localhost:8080/users/signup",
-                userInfo
-            );
-            if (res.data) {
-                console.log("res.data", res.data);
-                onClose();
+    const handleClick = async (e) => {
+        if (currentUser?.token) {
+                                                                /* update existing user  */
+            console.log("currentUser", currentUser);
+            console.log("userInfo", userInfo);
+            try {
+                console.log(currentUser);
+                const url = `${SERVER_URL}/users/${currentUser.id}`;
+                const res = await axios.put(url, {
+                    userInfo,
+                });
+                console.log("res", res);
+            } catch (err) {
+                console.log(err);
             }
-        } catch (err) {
-            console.log(err);
-            setErrorMassage(err.response.data.message !== undefined ? err.response.data.message : err.response.data)
+        } else {
+            /*SignUp newUser */
+            console.log("newUser");
+            try {
+                const res = await axios.post(
+                    "http://localhost:8080/users/signup",
+                    userInfo
+                );
+                if (res.data) {
+                    console.log("res.data", res.data);
+                    onClose();
+                }
+            } catch (err) {
+                console.log(err);
+                setErrorMassage(
+                    err.response.data.message !== undefined
+                        ? err.response.data.message
+                        : err.response.data
+                );
+            }
         }
     };
+
     return (
         <>
             <HStack>
@@ -62,6 +87,7 @@ export default function SignUpForm({ onClose, toggle }) {
                         type="text"
                         name="firstName"
                         onChange={handleChange}
+                        defaultValue={currentUser.firstName}
                     />
                 </FormControl>
                 <FormControl id="lastName">
@@ -70,12 +96,18 @@ export default function SignUpForm({ onClose, toggle }) {
                         type="text"
                         name="lastName"
                         onChange={handleChange}
+                        defaultValue={currentUser.lastName}
                     />
                 </FormControl>
             </HStack>
             <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" name="email" onChange={handleChange} />
+                <Input
+                    type="email"
+                    name="email"
+                    onChange={handleChange}
+                    defaultValue={currentUser.email}
+                />
             </FormControl>
             <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
@@ -84,13 +116,14 @@ export default function SignUpForm({ onClose, toggle }) {
                     name="password"
                     id="password"
                     onChange={handleChange}
+                    defaultValue={currentUser.phone}
                 />
             </FormControl>
             <InputGroup>
                 <InputRightElement h={"full"}>
                     <Button
                         pos={"absolute"}
-                        top={"-43"}
+                        top={"-41"}
                         variant={"ghost"}
                         onClick={() =>
                             setShowPassword((showPassword) => !showPassword)
@@ -103,25 +136,32 @@ export default function SignUpForm({ onClose, toggle }) {
             <FormControl id="rePassword" isRequired>
                 <FormLabel>Re Password</FormLabel>
                 <Input
-                    type={showPassword ? "text" : "password"}
+                    type="password"
                     name="rePassword"
                     id="rePassword"
                     onChange={handleChange}
+                    defaultValue={currentUser.phone}
                 />
             </FormControl>
             <FormControl id="phone">
                 <FormLabel>Phone Number</FormLabel>
-                <Input type="number" name="phone" onChange={handleChange} />
+                <Input
+                    type="number"
+                    name="phone"
+                    onChange={handleChange}
+                    defaultValue={currentUser.phone}
+                />
             </FormControl>
             <Stack spacing={1} pt={2}>
                 <Text color={"red"}>{errorMassage}</Text>
                 <Button
                     loadingText="Submitting"
                     disabled={
-                        userInfo.firstName === undefined ||
-                        userInfo.email === undefined ||
-                        userInfo.password == undefined ||
-                        userInfo.rePassword == undefined
+                        !currentUser?.token &&
+                        (userInfo.firstName === undefined ||
+                            userInfo.email === undefined ||
+                            userInfo.password == undefined ||
+                            userInfo.rePassword == undefined)
                     }
                     fontSize={"sm"}
                     fontWeight={600}
@@ -130,7 +170,7 @@ export default function SignUpForm({ onClose, toggle }) {
                     bg={"red.400"}
                     _hover={{ bg: "red.500" }}
                     onClick={() => {
-                        handleSignUp();
+                        handleClick();
                     }}
                 >
                     Sign up

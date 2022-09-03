@@ -11,13 +11,12 @@ import {
     Checkbox,
     CheckboxGroup,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUserContext } from "../../context/UserContext";
 import CheckBox from "./CheckBox";
 
 export default function AdminUsers() {
     const { users } = useUserContext();
-
 
     return (
         <>
