@@ -24,7 +24,7 @@ export default function PetCard(props) {
     return (
         <Stack
             as={NavLink}
-            to={`/pet/${_id}`}
+            to={`/search/pet/${_id}`}
             rounded={"2xl"}
             boxShadow={"2xl"}
             transition={"all .3s ease"}
@@ -78,19 +78,29 @@ export default function PetCard(props) {
                     alignItems="center"
                     align="center"
                 >
-                    <Button
-                        as={Text}
-                        fontSize={"sm"}
-                        fontWeight={600}
-                        color={"white"}
-                        href={"#"}
-                        colorScheme={"red"}
-                        bg={"red.400"}
-                        transition={"all .3s ease"}
-                        _hover={{ bg: "red.500" }}
-                    >
-                        Adopted
-                    </Button>
+                    {pet?.adoptionStatus === "Available" ? (
+                        <Button
+                            as={Text}
+                            fontSize={"sm"}
+                            fontWeight={600}
+                            color={"white"}
+                            colorScheme={"red"}
+                            bg={"green.400"}
+                            transition={"all .3s ease"}
+                            _hover={{ bg: "green.500" }}
+                        >
+                            {pet?.adoptionStatus}
+                        </Button>
+                    ) : (
+                        <Text
+                            as={Text}
+                            fontSize={"m"}
+                            fontWeight={600}
+                            color={useColorModeValue("red.700", "red.400")}
+                        >
+                            {pet?.adoptionStatus}
+                        </Text>
+                    )}
                     <Text
                         fontSize={"sm"}
                         fontWeight={400}

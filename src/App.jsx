@@ -51,7 +51,7 @@ function App() {
                                 path="/AddPetPage"
                                 element={<AddPetPage />}
                             />
-                            <Route path="/pet/:id" element={<PetCardPage/>} />
+                            <Route path="search/pet/:id" element={<PetCardPage/>} />
                             <Route
                                 path="/Unuthorised"
                                 element={<UnauthorisedPage />}
