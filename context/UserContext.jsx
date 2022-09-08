@@ -42,8 +42,6 @@ export default function UserContextProvider(props) {
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) {
             setCurrentUser(user);
-            console.log(user.token);
-            // setToken(user.token)
         }
     }, []);
 

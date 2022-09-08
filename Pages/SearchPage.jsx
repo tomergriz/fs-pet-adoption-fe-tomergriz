@@ -29,12 +29,12 @@ export default function Cards() {
         console.log(searchInfo);
     }
 
-    function filter(pets) {
-        const searchField = searchInfo?.search;
+    // function filter(pets) {
+    //     const searchField = searchInfo?.search;
 
-        // console.log("pet.name", pets);
-        if (Object.values(pets).includes(searchField)) return pets;
-    }
+    //     // console.log("pet.name", pets);
+    //     if (Object.values(pets).includes(searchField)) return pets;
+    // }
 
     return (
         <Container maxWidth={"100vw"} minHeight={"80.4vh"} mb={"13px"}>
@@ -100,7 +100,7 @@ export default function Cards() {
                 </Stack>
             </Stack>
             <PetGrid>
-                {pets?.filter(filter).map((pet) => (
+                {pets?./*.filter(filter)*/map((pet) => (
                     <PetCard key={pet._id} pet={pet} />
                 ))}
             </PetGrid>

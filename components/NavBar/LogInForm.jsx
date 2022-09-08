@@ -32,7 +32,9 @@ export default function LogInForm({ onClose, toggle }) {
 
     let navigate = useNavigate();
 
-    const { SERVER_URL, currentUser, setCurrentUser, setToken } = useUserContext();
+    const { SERVER_URL, currentUser, setCurrentUser, setToken } =
+        useUserContext();
+    const url = `${SERVER_URL}/users/login`;
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -40,16 +42,14 @@ export default function LogInForm({ onClose, toggle }) {
     };
     const handleLogin = async () => {
         try {
-            const res = await axios.post(`${SERVER_URL}/users/login`, {
+            const res = await axios.post(url, {
                 email: userInfo.email,
                 password: userInfo.password,
             });
             setCurrentUser(res.data);
-            console.log("tokken", res.data);
-            setToken(res.data.token)
+            setToken(res.data.token);
             setErrorMessage("");
             localStorage.setItem("user", JSON.stringify(res.data));
-            console.log("res.data", res.data);
             onClose();
         } catch (err) {
             console.log(err);

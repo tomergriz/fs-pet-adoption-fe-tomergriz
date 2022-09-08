@@ -35,7 +35,7 @@ export default function CallToActionWithVideo() {
                         fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
                     >
                         <Text as={"span"} position={"relative"}>
-                            Hello {currentUser.firstName} {currentUser.lastName} <br />Adopt A Pet.
+                            Hello {currentUser?.firstName} {currentUser?.lastName} <br />Adopt A Pet.
                         </Text>
                         <br />
                         <Text as={"span"} color={"red.400"}>

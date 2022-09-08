@@ -83,7 +83,7 @@ export default function SignUpForm({ onClose, toggle }) {
                         type="text"
                         name="firstName"
                         onChange={handleChange}
-                        defaultValue={currentUser.firstName}
+                        defaultValue={currentUser?.firstName}
                     />
                 </FormControl>
                 <FormControl id="lastName">
@@ -92,7 +92,7 @@ export default function SignUpForm({ onClose, toggle }) {
                         type="text"
                         name="lastName"
                         onChange={handleChange}
-                        defaultValue={currentUser.lastName}
+                        defaultValue={currentUser?.lastName}
                     />
                 </FormControl>
             </HStack>
@@ -102,7 +102,7 @@ export default function SignUpForm({ onClose, toggle }) {
                     type="email"
                     name="email"
                     onChange={handleChange}
-                    defaultValue={currentUser.email}
+                    defaultValue={currentUser?.email}
                 />
             </FormControl>
             <FormControl id="password" isRequired>
@@ -112,7 +112,7 @@ export default function SignUpForm({ onClose, toggle }) {
                     name="password"
                     id="password"
                     onChange={handleChange}
-                    defaultValue={currentUser.phone}
+                    defaultValue={currentUser?.phone}
                 />
             </FormControl>
             <InputGroup>
@@ -136,7 +136,7 @@ export default function SignUpForm({ onClose, toggle }) {
                     name="rePassword"
                     id="rePassword"
                     onChange={handleChange}
-                    defaultValue={currentUser.phone}
+                    defaultValue={currentUser?.phone}
                 />
             </FormControl>
             <FormControl id="phone">
@@ -145,7 +145,7 @@ export default function SignUpForm({ onClose, toggle }) {
                     type="number"
                     name="phone"
                     onChange={handleChange}
-                    defaultValue={currentUser.phone}
+                    defaultValue={currentUser?.phone}
                 />
             </FormControl>
             <Stack spacing={1} pt={2}>

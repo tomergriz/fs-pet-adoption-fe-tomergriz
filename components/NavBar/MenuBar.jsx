@@ -223,7 +223,7 @@ const DesktopNav = (token) => {
                             Search
                         </Text>
                     </Link>
-                    {token.currentUser.token && (
+                    {token?.currentUser?.token !== undefined && (
                         <Link mr={5} as={NavLink} to="/mypets" title="mypets">
                             <Text
                                 as={"span"}
@@ -267,7 +267,6 @@ const DesktopNav = (token) => {
 };
 
 const MobileNav = (token) => {
-    // console.log("token2", token.currentUser.token);
     return (
         <Container
             bg={useColorModeValue("white", "gray.800")}
@@ -299,7 +298,7 @@ const MobileNav = (token) => {
                             Search
                         </Text>
                     </Link>
-                    {token.currentUser.token && (
+                    {(token?.currentUser?.token !== undefined) && (
                         <Link as={NavLink} to="/mypets" title="mypets">
                             <Text
                                 fontWeight={600}
