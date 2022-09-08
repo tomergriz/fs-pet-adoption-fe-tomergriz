@@ -4,21 +4,35 @@ import { useUserContext } from "../../context/UserContext";
 import axios from "axios";
 
 export default function CheckBox({ user }) {
-    const { SERVER_URL } = useUserContext();
+    const { SERVER_URL, currentUser, loadUsers, updateUser, token } = useUserContext();
+
+    // try {
+    //     const res = await axios.put(url, userInfo, {
+    //         headers: {
+    //             authorization: "Bearer " + currentUser.token,
+    //         },
+    //     });
+    //     console.log("res", res);
+    // } catch (err) {
+    //     console.log(err);
+    // }
 
     async function handleChange(e) {
         try {
-            // user = { ...user, isAdmin: e.target.checked };
-            // console.log("e.target.checked", e.target.checked);
-            // console.log("user", user);
-
             const url = `${SERVER_URL}/users/${user._id}`;
-            const res = await axios.put(url, {
-                ...user,
-                isAdmin: e.target.checked,
-            });
+            const res = await axios.put(
+                url,
+                { ...user, isAdmin: e.target.checked },
+                {
+                    headers: {
+                        authorization: "Bearer " + token,
+                    },
+                }
+            );
             if (res) {
-                console.log('res', res);
+                console.log("res", res);
+                loadUsers();
+                // updateUser(res.data, user._id);
             }
         } catch (err) {
             console.log(err);

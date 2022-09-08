@@ -34,24 +34,20 @@ export default function SignUpForm({ onClose, toggle }) {
     const [showPassword, setShowPassword] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const [errorMassage, setErrorMassage] = useState(null);
-    const { SERVER_URL, currentUser } = useUserContext();
+    const { SERVER_URL, currentUser, token } = useUserContext();
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
         setUserInfo({ ...userInfo, [name]: value });
     };
     const handleClick = async (e) => {
-        if (currentUser?.token) {
-                                                                /* update existing user  */
-            console.log("currentUser", currentUser);
-            console.log("userInfo", userInfo);
+        if (token) {
+            /* update existing user  */
+            const url = `${SERVER_URL}/users/${currentUser.id}`;
             try {
-                console.log(currentUser);
-                const url = `${SERVER_URL}/users/${currentUser.id}`;
-                const res = await axios.put(url, {
-                    userInfo,
+                const res = await axios.put(url, userInfo, {
+                    headers: { authorization: "Bearer " + token, },
                 });
-                console.log("res", res);
             } catch (err) {
                 console.log(err);
             }
@@ -64,8 +60,8 @@ export default function SignUpForm({ onClose, toggle }) {
                     userInfo
                 );
                 if (res.data) {
-                    console.log("res.data", res.data);
                     onClose();
+                    return;
                 }
             } catch (err) {
                 console.log(err);
@@ -157,7 +153,7 @@ export default function SignUpForm({ onClose, toggle }) {
                 <Button
                     loadingText="Submitting"
                     disabled={
-                        !currentUser?.token &&
+                        !token &&
                         (userInfo.firstName === undefined ||
                             userInfo.email === undefined ||
                             userInfo.password == undefined ||

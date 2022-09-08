@@ -4,12 +4,12 @@ import { useUserContext } from "../context/UserContext";
 
 function PrivateRoute({ children }) {
     const navigate = useNavigate();
-    const { currentUser } = useUserContext();
+    const { currentUser, token } = useUserContext();
 
 
     // If not logged in - redirect
 useEffect(() => {
-    if (!currentUser?.token) {
+    if (!token) {
         return navigate('/');
     }
 }, [currentUser])

@@ -31,7 +31,7 @@ import { useUserContext } from "../../context/UserContext";
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
-    const { currentUser, setCurrentUser } = useUserContext();
+    const { currentUser, setCurrentUser, token, setToken } = useUserContext();
 
     const {
         isOpen: modalIsOpen,
@@ -41,10 +41,9 @@ export default function SignBar() {
 
     function handleLogout() {
         setCurrentUser({});
+        setToken("");
         window.localStorage.removeItem("user");
     }
-
-
     return (
         <Box>
             <Flex
@@ -85,7 +84,7 @@ export default function SignBar() {
                     justify={{ base: "center", md: "start" }}
                 >
                     <Flex display={{ base: "none", md: "flex" }} ml={5}>
-                        <DesktopNav currentUser={currentUser}/>
+                        <DesktopNav currentUser={currentUser} />
                     </Flex>
                 </Flex>
 
@@ -104,7 +103,7 @@ export default function SignBar() {
                         {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                     </Link>
 
-                    {currentUser?.token && ( //user Profile
+                    {token && ( //user Profile
                         <Menu>
                             <MenuButton
                                 as={Button}
@@ -151,9 +150,9 @@ export default function SignBar() {
                             </MenuList>
                         </Menu>
                     )}
-                    {!currentUser?.token && (
+                    {!token && ( //modal log in button
                         <Flex>
-                            <Button //modal log in button
+                            <Button
                                 fontSize={"sm"}
                                 fontWeight={600}
                                 color={"white"}
@@ -186,11 +185,9 @@ export default function SignBar() {
     );
 }
 
-const DesktopNav = (currentUser) => {
+const DesktopNav = (token) => {
     const linkColor = useColorModeValue("gray.600", "gray.200");
     const linkHoverColor = useColorModeValue("gray.800", "white");
-
-    // console.log(currentUser.currentUser.token);
 
     return (
         <Stack direction={"row"} spacing={4}>
@@ -226,7 +223,8 @@ const DesktopNav = (currentUser) => {
                             Search
                         </Text>
                     </Link>
-                    {currentUser?.currentUser?.token && (<Link mr={5} as={NavLink} to="/mypets" title="mypets">
+                    {token.currentUser.token && (
+                        <Link mr={5} as={NavLink} to="/mypets" title="mypets">
                             <Text
                                 as={"span"}
                                 transition={"all .3s ease"}
@@ -268,8 +266,8 @@ const DesktopNav = (currentUser) => {
     );
 };
 
-const MobileNav = (currentUser) => {
-
+const MobileNav = (token) => {
+    // console.log("token2", token.currentUser.token);
     return (
         <Container
             bg={useColorModeValue("white", "gray.800")}
@@ -301,14 +299,19 @@ const MobileNav = (currentUser) => {
                             Search
                         </Text>
                     </Link>
-                 { currentUser?.currentUser?.token && (<Link as={NavLink} to="/mypets" title="mypets">
-                        <Text
-                            fontWeight={600}
-                            color={useColorModeValue("gray.600", "gray.200")}
-                        >
-                            My Pets
-                        </Text>
-                    </Link>)}
+                    {token.currentUser.token && (
+                        <Link as={NavLink} to="/mypets" title="mypets">
+                            <Text
+                                fontWeight={600}
+                                color={useColorModeValue(
+                                    "gray.600",
+                                    "gray.200"
+                                )}
+                            >
+                                My Pets
+                            </Text>
+                        </Link>
+                    )}
                     <Link as={NavLink} to="/dashboard" title="dashboard">
                         <Text
                             fontWeight={600}

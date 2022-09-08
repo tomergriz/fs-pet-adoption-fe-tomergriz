@@ -33,6 +33,7 @@ import SignUpForm from "../components/NavBar/SignUpForm";
 export default function ProfilePage({ onClose, toggle }) {
     const [showPassword, setShowPassword] = useState(false);
     const [userInfo, setUserInfo] = useState({});
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -49,7 +50,8 @@ export default function ProfilePage({ onClose, toggle }) {
                 console.log("res.data", res.data);
             }
         } catch (err) {
-            console.log(err.response.data);
+            console.log(err);
+            setErrorMessage(err.message || "Server Error");
         }
     };
     return (
@@ -74,6 +76,7 @@ export default function ProfilePage({ onClose, toggle }) {
                     </Stack>
                 </Stack>
                     <SignUpForm />
+                    {errorMessage}
                 <Flex>
 
                     {/* <FormControl>

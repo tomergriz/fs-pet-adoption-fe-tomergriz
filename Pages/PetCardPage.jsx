@@ -35,7 +35,7 @@ import { useUserContext } from "../context/UserContext";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 export default function PetCardPage() {
-    const { currentUser, SERVER_URL } = useUserContext();
+    const { currentUser, SERVER_URL, token } = useUserContext();
     const [pet, setPet] = useState();
     const { id } = useParams();
     // console.log("currentUser", currentUser);
@@ -44,7 +44,6 @@ export default function PetCardPage() {
     const loadPets = async () => {
         try {
             const res = await axios.get(url);
-            console.log(res.data[0]);
             setPet(res.data[0]);
         } catch (err) {
             console.log(err);
@@ -145,17 +144,16 @@ export default function PetCardPage() {
                                     <Text fontWeight="bold">
                                         {" "}
                                         {pet?.adoptionStatus === "Adopted"
-                                            ? "Already adopted"
+                                            ? "Already Adopted"
                                             : ""}
                                         {pet?.adoptionStatus === "Fostered"
-                                            ? "Already fostered"
+                                            ? "Already Fostered"
                                             : ""}
                                     </Text>
                                 </Box>
                             </Heading>
                         </Stack>
-                        {pet?.adoptionStatus === "Available" &&
-                        currentUser?.token ? (
+                        {pet?.adoptionStatus === "Available" ? (
                             <HStack spacing="3">
                                 <Link
                                     color={useColorModeValue(
@@ -165,7 +163,6 @@ export default function PetCardPage() {
                                     fontWeight="bold"
                                     fontSize="lg"
                                 >
-                                    {" "}
                                     <Icon
                                         mr={"2"}
                                         color={useColorModeValue(
@@ -198,7 +195,7 @@ export default function PetCardPage() {
                             </HStack>
                         ) : (
                             <HStack spacing="3">
-                                <Link
+                                { !token && (<Link
                                     color={useColorModeValue(
                                         "red.500",
                                         "red.300"
@@ -206,8 +203,8 @@ export default function PetCardPage() {
                                     fontWeight="bold"
                                     fontSize="lg"
                                 >
-                                    Register Now to Adopt
-                                </Link>
+                                    Register Now
+                                </Link>) }
                                 <Icon
                                     color={useColorModeValue(
                                         "red.500",

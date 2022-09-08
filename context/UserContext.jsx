@@ -9,8 +9,21 @@ export default function UserContextProvider(props) {
     // const SERVER_URL = process.env.REACT_APP_SERVER_URL;
     const SERVER_URL = "http://localhost:8080";
     const [users, setUsers] = useState({});
-    const [currentUser, setCurrentUser] = useState({});
+    const [token, setToken] = useState({});
+    const [currentUser, setCurrentUser] = useState(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user) return user;
+        return {};
+    });
     const isLoggedIn = currentUser !== null;
+
+    const updateUser = (newUser, id) => {
+        setUsers((prevUsers) => {
+            const index = prevUsers.findIndex((user) => user._id === id);
+            prevUsers[index] = newUser;
+            return prevUsers;
+        });
+    };
 
     const loadUsers = async () => {
         try {
@@ -29,12 +42,25 @@ export default function UserContextProvider(props) {
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) {
             setCurrentUser(user);
+            console.log(user.token);
+            // setToken(user.token)
         }
     }, []);
 
     return (
         <UserContext.Provider
-            value={{ SERVER_URL, currentUser, setCurrentUser, users, setUsers, isLoggedIn }}
+            value={{
+                SERVER_URL,
+                currentUser,
+                setCurrentUser,
+                users,
+                setUsers,
+                isLoggedIn,
+                loadUsers,
+                updateUser,
+                token,
+                setToken,
+            }}
         >
             {props.children}
         </UserContext.Provider>

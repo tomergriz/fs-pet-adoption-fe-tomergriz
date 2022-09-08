@@ -16,15 +16,43 @@ import {
 import * as React from "react";
 import { FavoriteButton } from "./FavoriteButton";
 import { NavLink } from "react-router-dom";
+import { useUserContext } from "../../context/UserContext";
+import axios from "axios";
 
-export default function PetCard(props) {
-    const { pet, rootProps } = props;
+export default function PetCard({ pet, rootProps }) {
     const { picture, name, _id } = pet;
+    const { currentUser, setCurrentUser, SERVER_URL, token } = useUserContext();
+
+    async function handleFavorite() {
+        try {
+            const url = `${SERVER_URL}/pets/${pet._id}/save`;
+            const res = await axios.put(
+                url,
+                {},
+                {
+                    headers: {
+                        authorization: "Bearer " + token,
+                    },
+                }
+            );
+            if (res) {
+                // console.log("currentUser", currentUser);
+                console.log("res.data user with savedPets", res.data.saved);
+                console.log(pets)
+                setCurrentUser(res.data)
+                console.log(res.data);
+                // loadUsers();
+                // updateUser(res.data, user._id);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <Stack
-            as={NavLink}
-            to={`/search/pet/${_id}`}
+            // as={NavLink}
+            // to={`/search/pet/${_id}`}
             rounded={"2xl"}
             boxShadow={"2xl"}
             transition={"all .3s ease"}
@@ -56,9 +84,11 @@ export default function PetCard(props) {
                     />
                 </AspectRatio>
                 <FavoriteButton
+                    onClick={handleFavorite}
                     position="absolute"
                     top="4"
                     right="4"
+                    // bgColor={(currentUser.saved).includes_id) ? "white" : "black"}
                     aria-label={`Add ${name} to your favorite`}
                 />
             </Box>
@@ -80,14 +110,15 @@ export default function PetCard(props) {
                 >
                     {pet?.adoptionStatus === "Available" ? (
                         <Button
-                            as={Text}
+                            as={NavLink}
+                            to={`/search/pet/${_id}`}
                             fontSize={"sm"}
                             fontWeight={600}
                             color={"white"}
                             colorScheme={"red"}
                             bg={"green.400"}
                             transition={"all .3s ease"}
-                            _hover={{ bg: "green.500" }}
+                            _hover={{ bg: "green.500", textColor: "white" }}
                         >
                             {pet?.adoptionStatus}
                         </Button>
@@ -103,13 +134,14 @@ export default function PetCard(props) {
                     )}
                     <Text
                         fontSize={"sm"}
+                        as={NavLink}
+                        to={`/search/pet/${_id}`}
                         fontWeight={400}
                         variant={"link"}
                         color={useColorModeValue("gray.700", "gray.400")}
                         colorScheme={"red"}
                         p={2}
                         transition={"all .3s ease"}
-                        to={`pets/${_id}`}
                     >
                         See More
                     </Text>

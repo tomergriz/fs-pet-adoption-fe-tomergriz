@@ -8,8 +8,9 @@ export const usePetContext = () => {
 export default function PetContextProvider(props) {
     const SERVER_URL = "http://localhost:8080";
 
-    const [pets, setPets] = useState({});
+    const [pets, setPets] = useState([]);
 
+    
 
     const loadPets = async () => {
         try {

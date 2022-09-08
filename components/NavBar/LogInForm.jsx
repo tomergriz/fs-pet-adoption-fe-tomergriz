@@ -32,7 +32,7 @@ export default function LogInForm({ onClose, toggle }) {
 
     let navigate = useNavigate();
 
-    const { SERVER_URL, currentUser, setCurrentUser } = useUserContext();
+    const { SERVER_URL, currentUser, setCurrentUser, setToken } = useUserContext();
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -45,11 +45,14 @@ export default function LogInForm({ onClose, toggle }) {
                 password: userInfo.password,
             });
             setCurrentUser(res.data);
+            console.log("tokken", res.data);
+            setToken(res.data.token)
             setErrorMessage("");
             localStorage.setItem("user", JSON.stringify(res.data));
-            onClose();
             console.log("res.data", res.data);
+            onClose();
         } catch (err) {
+            console.log(err);
             setErrorMessage(err.response.data || "Network Error");
         }
     };
