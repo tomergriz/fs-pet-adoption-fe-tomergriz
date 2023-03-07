@@ -9,7 +9,11 @@ export default function UserContextProvider(props) {
     // const SERVER_URL = process.env.REACT_APP_SERVER_URL;
     const SERVER_URL = "http://localhost:8080";
     const [users, setUsers] = useState({});
-    const [token, setToken] = useState({});
+    const [token, setToken] = useState(() => {
+        const storedToken = localStorage.getItem("token");
+        return storedToken ? storedToken : null;
+    });
+    
     const [currentUser, setCurrentUser] = useState(() => {
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) return user;
@@ -44,6 +48,29 @@ export default function UserContextProvider(props) {
             setCurrentUser(user);
         }
     }, []);
+
+    useEffect(() => {
+        const checkTokenExpiration = async () => {
+            try {
+                const res = await axios.get(`${SERVER_URL}/auth/check`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (!res.data.success) {
+                    setToken(null);
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        if (token) {
+            checkTokenExpiration();
+        }
+    }, [token]);
 
     return (
         <UserContext.Provider

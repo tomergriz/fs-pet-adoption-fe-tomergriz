@@ -23,6 +23,7 @@
     "dotenv": "^16.0.1",
     "feather-icons": "^4.29.0",
     "framer-motion": "^6.5.1",
+    "jsonwebtoken": "^9.0.0",
     "react": "^18.2.0",
     "react-axios": "^2.0.6",
     "react-dom": "^18.2.0",

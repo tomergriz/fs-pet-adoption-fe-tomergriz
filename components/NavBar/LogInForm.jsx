@@ -40,7 +40,31 @@ export default function LogInForm({ onClose, toggle }) {
         const { name, value } = target;
         setUserInfo({ ...userInfo, [name]: value });
     };
+    // const handleLogin = async () => {
+    //     try {
+    //         const res = await axios.post(url, {
+    //             email: userInfo.email,
+    //             password: userInfo.password,
+    //         });
+    //         setCurrentUser(res.data);
+    //         setToken(res.data.token);
+    //         setErrorMessage("");
+    //         localStorage.setItem("user", JSON.stringify(res.data));
+    //         onClose();
+    //     } catch (err) {
+    //         console.log(err);
+    //         setErrorMessage(err.response.data || "Network Error");
+    //     }
+    // };
+
     const handleLogin = async () => {
+        const storedToken = localStorage.getItem("token");
+if (storedToken) {
+    setToken(storedToken);
+    onClose();
+    return;
+}
+
         try {
             const res = await axios.post(url, {
                 email: userInfo.email,
@@ -49,14 +73,15 @@ export default function LogInForm({ onClose, toggle }) {
             setCurrentUser(res.data);
             setToken(res.data.token);
             setErrorMessage("");
-            localStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("token", res.data.token);
             onClose();
         } catch (err) {
             console.log(err);
             setErrorMessage(err.response.data || "Network Error");
         }
     };
-
+    
+    
     return (
         <>
             <FormControl id="email" isRequired>

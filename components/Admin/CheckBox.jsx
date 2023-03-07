@@ -4,18 +4,8 @@ import { useUserContext } from "../../context/UserContext";
 import axios from "axios";
 
 export default function CheckBox({ user }) {
-    const { SERVER_URL, currentUser, loadUsers, updateUser, token } = useUserContext();
-
-    // try {
-    //     const res = await axios.put(url, userInfo, {
-    //         headers: {
-    //             authorization: "Bearer " + currentUser.token,
-    //         },
-    //     });
-    //     console.log("res", res);
-    // } catch (err) {
-    //     console.log(err);
-    // }
+    const { SERVER_URL, currentUser, loadUsers, updateUser, token } =
+        useUserContext();
 
     async function handleChange(e) {
         try {
@@ -30,12 +20,10 @@ export default function CheckBox({ user }) {
                 }
             );
             if (res) {
-                console.log("res", res);
                 loadUsers();
-                // updateUser(res.data, user._id);
             }
         } catch (err) {
-            console.log(err);
+            console.log(err.response.data);
         }
     }
 

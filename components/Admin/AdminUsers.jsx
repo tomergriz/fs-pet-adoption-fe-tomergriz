@@ -40,7 +40,7 @@ export default function AdminUsers() {
                                     <Td>{user.lastName}</Td>
                                     <Td>{user.phone}</Td>
                                     <Td>
-                                        <CheckBox user={user}/>
+                                        <CheckBox user={user} />
                                     </Td>
                                 </Tr>
                             ))}
