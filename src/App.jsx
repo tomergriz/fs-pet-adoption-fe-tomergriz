@@ -5,7 +5,6 @@ import "./App.css";
 import { Box, Flex } from "@chakra-ui/react";
 import UserContextProvider from "../context/UserContext";
 import MenuBar from "../components/NavBar/MenuBar";
-// import MenuBarcopy from "../components/NavBar/MenuBarcopy";
 import HomePage from "../Pages/HomePage";
 import SearchPage from "../Pages/SearchPage";
 import ProfilePage from "../Pages/ProfilePage";
@@ -34,12 +33,7 @@ function App() {
 
                             <Route
                                 path="/profile"
-                                element={
-                                    <PrivateRoute>
-                                        <ProfilePage />
-                                    </PrivateRoute>
-                                }
-                            />
+                                element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
                             <Route
                                 path="/mypets"
                                 element={
@@ -48,7 +42,7 @@ function App() {
                                     </PrivateRoute>
                                 }
                             />
-                            <Route path="/Dashboard" element={<Dashboard />} />
+                            <Route path="/Dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
                             <Route
                                 path="/AddPetPage"
                                 element={<AddPetPage />}

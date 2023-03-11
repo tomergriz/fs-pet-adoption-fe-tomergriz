@@ -43,6 +43,8 @@ export default function SignBar() {
         setCurrentUser({});
         setToken("");
         window.localStorage.removeItem("user");
+        window.localStorage.removeItem("token");
+
     }
     return (
         <Box>

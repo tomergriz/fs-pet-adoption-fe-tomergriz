@@ -15,9 +15,18 @@ import {
 import React from "react";
 import AdminUsers from "../../components/Admin/AdminUsers";
 import AdminPets from "../../components/Admin/AdminPets";
-
+import { useUserContext } from "../../context/usercontext";
+import { useEffect } from "react";
 
 export default function AdminPage() {
+    const { currentUser, token } = useUserContext();
+
+
+    useEffect(() => {
+        console.log("currentUser", currentUser);
+        console.log("token", token);
+    }, [currentUser, token]);
+
     return (
         <Box>
             <Container maxWidth={"100vw"} mb={"13px"}>
@@ -31,7 +40,11 @@ export default function AdminPage() {
                         <Heading
                             lineHeight={1.1}
                             fontWeight={600}
-                            fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
+                            fontSize={{
+                                base: "3xl",
+                                sm: "4xl",
+                                lg: "6xl",
+                            }}
                         >
                             <Text as={"span"} color={"red.400"}>
                                 Users
@@ -53,7 +66,11 @@ export default function AdminPage() {
                         <Heading
                             lineHeight={1.1}
                             fontWeight={600}
-                            fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
+                            fontSize={{
+                                base: "3xl",
+                                sm: "4xl",
+                                lg: "6xl",
+                            }}
                         >
                             <Text as={"span"} color={"red.400"}>
                                 Pets
