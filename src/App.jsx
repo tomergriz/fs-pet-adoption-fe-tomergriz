@@ -42,7 +42,8 @@ function App() {
                                     </PrivateRoute>
                                 }
                             />
-                            <Route path="/Dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+                            {/* <Route path="/Dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}
+                            <Route path="/Dashboard" element={<Dashboard />} />
                             <Route
                                 path="/AddPetPage"
                                 element={<AddPetPage />}

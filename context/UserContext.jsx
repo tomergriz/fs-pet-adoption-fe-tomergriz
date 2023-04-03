@@ -13,13 +13,41 @@ export default function UserContextProvider(props) {
         const storedToken = localStorage.getItem("token");
         return storedToken ? storedToken : null;
     });
-    
+
     const [currentUser, setCurrentUser] = useState(() => {
         const user = JSON.parse(localStorage.getItem("user"));
-        if (user) return user;
-        return {};
+        return user ? user : {};
     });
     const isLoggedIn = currentUser !== null;
+
+    useEffect(() => {
+        loadUsers();
+    }, [token]);
+
+    const loadUsers = async () => {
+        console.log(
+            "WORKING BUT MOVE TO ADMIN PAGE. Here will be the basic check auth"
+        );
+        try {
+            const res = await axios.get(`${SERVER_URL}/users/all`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            setUsers(res?.data);
+        } catch (err) {
+            logout();
+            console.log(err);
+        }
+    };
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setCurrentUser({});
+        setToken(null);
+        setUsers({});
+    };
 
     const updateUser = (newUser, id) => {
         setUsers((prevUsers) => {
@@ -29,48 +57,12 @@ export default function UserContextProvider(props) {
         });
     };
 
-    const loadUsers = async () => {
-        try {
-            const res = await axios.get(`${SERVER_URL}/users/all`);
-            setUsers(res.data);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    useEffect(() => {
-        loadUsers();
-    }, []);
-
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
         if (user) {
             setCurrentUser(user);
         }
     }, []);
-
-    useEffect(() => {
-        const checkTokenExpiration = async () => {
-            try {
-                const res = await axios.get(`${SERVER_URL}/auth/check`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                if (!res.data.success) {
-                    setToken(null);
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("user");
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        if (token) {
-            checkTokenExpiration();
-        }
-    }, [token]);
 
     return (
         <UserContext.Provider

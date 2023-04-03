@@ -18,11 +18,19 @@ import {
     MenuDivider,
     useColorMode,
     Center,
+    MenuItemOption,
+    MenuGroup,
+    MenuOptionGroup,
     PopoverTrigger,
     Popover,
     PopoverContent,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import {
+    HamburgerIcon,
+    CloseIcon,
+    MoonIcon,
+    SunIcon,
+} from "@chakra-ui/icons";
 import React, { useState, useEffect } from "react";
 import LogInModal from "./LogInModal";
 import { NavLink } from "react-router-dom";
@@ -31,7 +39,8 @@ import { useUserContext } from "../../context/UserContext";
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode();
-    const { currentUser, setCurrentUser, token, setToken } = useUserContext();
+    const { currentUser, setCurrentUser, token, setToken, user } =
+        useUserContext();
 
     const {
         isOpen: modalIsOpen,
@@ -44,8 +53,8 @@ export default function SignBar() {
         setToken("");
         window.localStorage.removeItem("user");
         window.localStorage.removeItem("token");
-
     }
+
     return (
         <Box>
             <Flex
@@ -63,22 +72,81 @@ export default function SignBar() {
                 z-index={3}
             >
                 <Flex
-                    flex={{ base: 1, md: "auto" }}
+                    // flex={{ base: 1, md: "auto" }}
                     ml={{ base: -2 }}
                     display={{ base: "flex", md: "none" }}
                 >
-                    <IconButton
-                        onClick={onToggle}
-                        icon={
-                            isOpen ? (
-                                <CloseIcon w={3} h={3} />
-                            ) : (
-                                <HamburgerIcon w={5} h={5} />
-                            )
-                        }
-                        variant={"ghost"}
-                        aria-label={"Toggle Navigation"}
-                    />
+                    <Menu>
+                        <MenuButton
+                            as={Button}
+                            rightIcon={<HamburgerIcon w={5} h={5} />}
+                            bg={useColorModeValue("white", "gray.800")}
+                            variant={"ghost"}
+                            aria-label={"Toggle Navigation"}
+                        ></MenuButton>
+                        <MenuList
+                            mt={2}
+                            borderStyle={"solid"}
+                            borderColor={useColorModeValue(
+                                "gray.200",
+                                "gray.700"
+                            )}
+                            fontWeight={600}
+                            color={useColorModeValue("gray.600", "gray.200")}
+                            _groupHover={{ color: "pink.400" }}
+                        >
+                            <MenuItem
+                                as={NavLink}
+                                to="/"
+                                transition={"all .3s ease"}
+                                _hover={{
+                                    color: "pink.400",
+                                }}
+                            >
+                                Home
+                            </MenuItem>
+                            <MenuItem
+                                as={NavLink}
+                                to="/search"
+                                transition={"all .3s ease"}
+                                _hover={{
+                                    color: "pink.400",
+                                }}
+                            >
+                                Search
+                            </MenuItem>
+                            {token && (
+                                <MenuItem
+                                    as={NavLink}
+                                    to="/mypets"
+                                    transition={"all .3s ease"}
+                                    _hover={{
+                                        color: "pink.400",
+                                    }}
+                                >
+                                    My Pets
+                                </MenuItem>
+                            )}
+                            {token && (
+                                <MenuItem
+                                    as={NavLink}
+                                    to="/dashboard"
+                                    transition={"all .3s ease"}
+                                    _hover={{
+                                        color: "pink.400",
+                                    }}
+                                >
+                                    Dashboard
+                                </MenuItem>
+                            )}
+                        </MenuList>
+                    </Menu>
+                </Flex>
+                <Flex
+                    ml={{ base: -2 }}
+                    display={{ base: "flex", md: "none" }}
+                >
+                   
                 </Flex>
 
                 <Flex
@@ -180,9 +248,9 @@ export default function SignBar() {
                 </Stack>
             </Flex>
 
-            <Collapse in={isOpen} animateOpacity>
+            {/* <Collapse in={isOpen} animateOpacity>
                 <MobileNav currentUser={currentUser} />
-            </Collapse>
+            </Collapse> */}
         </Box>
     );
 }
@@ -268,69 +336,4 @@ const DesktopNav = (token) => {
     );
 };
 
-const MobileNav = (token) => {
-    return (
-        <Container
-            bg={useColorModeValue("white", "gray.800")}
-            p={4}
-            display={{ md: "none" }}
-        >
-            <Stack
-                mt={2}
-                pl={4}
-                borderLeft={1}
-                borderStyle={"solid"}
-                borderColor={useColorModeValue("gray.200", "gray.700")}
-                align={"start"}
-            >
-                <Stack spacing={4}>
-                    <Link as={NavLink} to="/" title="home">
-                        <Text
-                            fontWeight={600}
-                            color={useColorModeValue("gray.600", "gray.200")}
-                        >
-                            Home
-                        </Text>
-                    </Link>
-                    <Link as={NavLink} to="/search" title="search">
-                        <Text
-                            fontWeight={600}
-                            color={useColorModeValue("gray.600", "gray.200")}
-                        >
-                            Search
-                        </Text>
-                    </Link>
-                    {(token?.currentUser?.token !== undefined) && (
-                        <Link as={NavLink} to="/mypets" title="mypets">
-                            <Text
-                                fontWeight={600}
-                                color={useColorModeValue(
-                                    "gray.600",
-                                    "gray.200"
-                                )}
-                            >
-                                My Pets
-                            </Text>
-                        </Link>
-                    )}
-                    <Link as={NavLink} to="/dashboard" title="dashboard">
-                        <Text
-                            fontWeight={600}
-                            color={useColorModeValue("gray.600", "gray.200")}
-                        >
-                            Dashboard
-                        </Text>
-                    </Link>
-                    <Link as={NavLink} to="/AddPetPage" title="AddPetPage">
-                        <Text
-                            fontWeight={600}
-                            color={useColorModeValue("gray.600", "gray.200")}
-                        >
-                            Add Pet
-                        </Text>
-                    </Link>
-                </Stack>
-            </Stack>
-        </Container>
-    );
-};
+
