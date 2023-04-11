@@ -18,14 +18,11 @@ import MyPets from "../Pages/MyPets";
 import PetCardPage from "../Pages/PetCardPage";
 
 function App() {
-    const baseUrl = "http://localhost:8080";
-
     return (
         <>
             <UserContextProvider>
                 <PetContextProvider>
                     <MenuBar />
-                    {/* <MenuBarcopy/> */}
                     <Box>
                         <Routes>
                             <Route path="/" element={<HomePage />} />
@@ -44,24 +41,14 @@ function App() {
                             />
                             {/* <Route path="/Dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} /> */}
                             <Route path="/Dashboard" element={<Dashboard />} />
-                            <Route
-                                path="/AddPetPage"
-                                element={<AddPetPage />}
-                            />
-                            <Route
-                                path="search/pet/:id"
-                                element={<PetCardPage />}
-                            />
-                            <Route
-                                path="/Unuthorised"
-                                element={<UnauthorisedPage />}
-                            />
+                            <Route path="/AddPetPage" element={<AddPetPage />} />
+                            <Route path="search/pet/:id" element={<PetCardPage />} />
+                            <Route path="/Unuthorised" element={<UnauthorisedPage />} />
                             <Route path="*" element={<Page404 />} />
                         </Routes>
                     </Box>
                 </PetContextProvider>
             </UserContextProvider>
-            {/* { <Heading as="h1" color="brand.color3">Hello world!</Heading>} */}
         </>
     );
 }

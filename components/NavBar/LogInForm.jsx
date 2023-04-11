@@ -27,46 +27,44 @@ import axios from "axios";
 
 export default function LogInForm({ onClose, toggle }) {
     const [usersList, setUsersList] = useState({});
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState({ id: "" });
     const [errorMessage, setErrorMessage] = useState("");
 
     let navigate = useNavigate();
 
-    const { SERVER_URL, currentUser, setCurrentUser, setToken } =
-        useUserContext();
+    const { SERVER_URL, currentUser, setCurrentUser, setToken } = useUserContext();
     const url = `${SERVER_URL}/users/login`;
 
-    const handleChange = ({ target }) => {
+    const handleChange = ({ target }, id) => {
         const { name, value } = target;
-        setUserInfo({ ...userInfo, [name]: value });
+        setUserInfo({ ...userInfo, [name]: value, id: id });
     };
 
     const handleLogin = async () => {
         const storedToken = localStorage.getItem("token");
-if (storedToken) {
-    setToken(storedToken);
-    onClose();
-    return;
-}
-
+        if (storedToken) {
+            setToken(storedToken);
+            onClose();
+            return;
+        }
         try {
             const res = await axios.post(url, {
                 email: userInfo.email,
                 password: userInfo.password,
             });
             setCurrentUser(res.data);
-            console.log("res.data", res.data); 
             setToken(res.data.token);
             setErrorMessage("");
             localStorage.setItem("token", res.data.token);
+            console.log("res.data", res.data);
+            localStorage.setItem("user", JSON.stringify(res.data));
             onClose();
         } catch (err) {
             console.log(err);
             setErrorMessage(err.response.data || "Network Error");
         }
     };
-    
-    
+
     return (
         <>
             <FormControl id="email" isRequired>
@@ -75,19 +73,12 @@ if (storedToken) {
             </FormControl>
             <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                />
+                <Input type="password" name="password" onChange={handleChange} />
             </FormControl>
             <Text color={"red"}>{errorMessage}</Text>
             <Stack spacing={1}>
                 <Button
-                    disabled={
-                        userInfo.email === undefined ||
-                        userInfo.password === undefined
-                    }
+                    disabled={userInfo.email === undefined || userInfo.password === undefined}
                     loadingText="Submitting"
                     fontSize={"sm"}
                     fontWeight={600}

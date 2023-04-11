@@ -1,14 +1,22 @@
+if (typeof process === "undefined") {
+    var process = {
+        env: {
+            NODE_ENV: "development",
+        },
+    };
+}
+
 import { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
+import jwtDecode from "jwt-decode";
+
 export const UserContext = createContext("");
 export const useUserContext = () => {
     return useContext(UserContext);
 };
 
 export default function UserContextProvider(props) {
-    // const SERVER_URL = process.env.REACT_APP_SERVER_URL;
-    const SERVER_URL = "http://localhost:8080";
-    const [users, setUsers] = useState({});
+    const SERVER_URL = import.meta.env.VITE_REACT_APP_SERVER_URL || "http://localhost:8080";
     const [token, setToken] = useState(() => {
         const storedToken = localStorage.getItem("token");
         return storedToken ? storedToken : null;
@@ -18,51 +26,66 @@ export default function UserContextProvider(props) {
         const user = JSON.parse(localStorage.getItem("user"));
         return user ? user : {};
     });
+
     const isLoggedIn = currentUser !== null;
 
-    useEffect(() => {
-        loadUsers();
-    }, [token]);
-
-    const loadUsers = async () => {
-        console.log(
-            "WORKING BUT MOVE TO ADMIN PAGE. Here will be the basic check auth"
-        );
+    const logout = async () => {
         try {
-            const res = await axios.get(`${SERVER_URL}/users/all`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            setUsers(res?.data);
-        } catch (err) {
-            logout();
-            console.log(err);
+            await axios.post(
+                `${SERVER_URL}/users/logout`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+        } catch (error) {
+            console.error(error);
         }
-    };
 
-    const logout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setCurrentUser({});
         setToken(null);
-        setUsers({});
     };
 
     const updateUser = (newUser, id) => {
-        setUsers((prevUsers) => {
-            const index = prevUsers.findIndex((user) => user._id === id);
-            prevUsers[index] = newUser;
-            return prevUsers;
-        });
+        try {
+            setUsers((prevUsers) => {
+                const index = prevUsers.findIndex((user) => user._id === id);
+                prevUsers[index] = newUser;
+                return prevUsers;
+            });
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"));
-        if (user) {
-            setCurrentUser(user);
+        const storedToken = localStorage.getItem("token");
+
+        if (storedToken) {
+            const decodedToken = jwtDecode(storedToken);
+            const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+            if (isTokenExpired) {
+                logout();
+            } else {
+                setCurrentUser(user ? user : {});
+                setToken(storedToken);
+            }
+        } else {
+            setCurrentUser({});
+            setToken(null);
         }
     }, []);
+
+    useEffect(() => {
+        if (token === null) {
+            logout();
+        }
+    }, [token]);
 
     return (
         <UserContext.Provider
@@ -70,10 +93,7 @@ export default function UserContextProvider(props) {
                 SERVER_URL,
                 currentUser,
                 setCurrentUser,
-                users,
-                setUsers,
                 isLoggedIn,
-                loadUsers,
                 updateUser,
                 token,
                 setToken,
