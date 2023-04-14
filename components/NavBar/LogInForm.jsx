@@ -1,50 +1,50 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Box,
-    Flex,
     Button,
+    Checkbox,
+    Flex,
+    FormControl,
+    FormLabel,
+    Heading,
+    Input,
+    Link,
     Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
-    FormLabel,
-    FormControl,
-    Input,
-    Checkbox,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
     Stack,
-    Link,
-    Heading,
     Text,
     useColorModeValue,
+    useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../context/UserContext";
 import axios from "axios";
+import { useUserContext } from "../../context/UserContext";
 
 export default function LogInForm({ onClose, toggle }) {
-    const [usersList, setUsersList] = useState({});
-    const [userInfo, setUserInfo] = useState({ id: "" });
+    const [userInfo, setUserInfo] = useState({ email: "", password: "" });
     const [errorMessage, setErrorMessage] = useState("");
-
-    let navigate = useNavigate();
-
-    const { SERVER_URL, currentUser, setCurrentUser, setToken } = useUserContext();
+    const { SERVER_URL, setCurrentUser, setToken } = useUserContext();
     const url = `${SERVER_URL}/users/login`;
 
-    const handleChange = ({ target }, id) => {
-        const { name, value } = target;
-        setUserInfo({ ...userInfo, [name]: value, id: id });
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserInfo({ ...userInfo, [name]: value });
+    };
+
+    const handleEnterKeyPress = (e) => {
+        if (e.key === "Enter") {
+            handleLogin();
+        }
     };
 
     const handleLogin = async () => {
-        const storedToken = localStorage.getItem("token");
-        if (storedToken) {
-            setToken(storedToken);
-            onClose();
+        if (!userInfo.email || !userInfo.password) {
+            setErrorMessage("Please fill in all fields.");
             return;
         }
         try {
@@ -56,12 +56,10 @@ export default function LogInForm({ onClose, toggle }) {
             setToken(res.data.token);
             setErrorMessage("");
             localStorage.setItem("token", res.data.token);
-            console.log("res.data", res.data);
             localStorage.setItem("user", JSON.stringify(res.data));
             onClose();
         } catch (err) {
-            console.log(err);
-            setErrorMessage(err.response.data || "Network Error");
+            setErrorMessage(err.response?.data || "Network Error");
         }
     };
 
@@ -69,45 +67,27 @@ export default function LogInForm({ onClose, toggle }) {
         <>
             <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" name="email" onChange={handleChange} />
+                <Input type="email" name="email" onChange={handleChange} onKeyDown={handleEnterKeyPress} />
             </FormControl>
             <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input type="password" name="password" onChange={handleChange} />
+                <Input type="password" name="password" onChange={handleChange} onKeyDown={handleEnterKeyPress} />
             </FormControl>
-            <Text color={"red"}>{errorMessage}</Text>
+            <Text color="red">{errorMessage}</Text>
             <Stack spacing={1}>
                 <Button
-                    disabled={userInfo.email === undefined || userInfo.password === undefined}
+                    disabled={!userInfo.email || !userInfo.password}
                     loadingText="Submitting"
-                    fontSize={"sm"}
+                    fontSize="sm"
                     fontWeight={600}
-                    color={"white"}
-                    colorScheme={"red"}
-                    bg={"red.400"}
-                    _hover={{ bg: "red.500" }}
-                    onClick={() => {
-                        handleLogin();
-                        // onClose();
-                    }}
+                    colorScheme="red"
+                    onClick={handleLogin}
                 >
                     Login
                 </Button>
-                <Text
-                    align={"center"}
-                    color={"red.400"}
-                    onClick={toggle}
-                    as={"u"}
-                    cursor={"pointer"}
-                    transition={"all .3s ease"}
-                    _hover={{ color: "red.500" }}
-                >
+                <Text align="center" color="red.400" onClick={toggle} as="u" cursor="pointer" transition="all .3s ease" _hover={{ color: "red.500" }}>
                     Don't have an account? Sign up
                 </Text>
-
-                {/* <Link color={"blue.400"}>
-                    Don't have an account yet? Sign Up
-                </Link> */}
             </Stack>
         </>
     );

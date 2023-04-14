@@ -1,109 +1,72 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import {
-    Container,
-    Heading,
-    Text,
-    Input,
-    Button,
-    IconButton,
-    Checkbox,
-    CheckboxGroup,
-    Stack,
-    HStack,
-    Flex,
-    Box,
-    VStack,
+  Box,
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  Container,
+  Heading,
+  IconButton,
+  Input,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { SearchIcon } from "@chakra-ui/icons";
 import PetGrid from "../components/GridWithAddToCartButton/PetGrid";
 import PetCard from "../components/GridWithAddToCartButton/PetCard";
-import { usePetContext } from "../context/PetContext";
-import { SearchIcon } from "@chakra-ui/icons";
+import PetSearch from "../components/PetSearch";
+
+const SERVER_URL = "http://localhost:8080";
 
 export default function Cards() {
-    const { pets } = usePetContext();
-    const [searchInfo, setSearchInfo] = useState({});
+  const [searchInfo, setSearchInfo] = useState({
+    search: "",
+    type: ["Dog", "Cat"],
+  });
+  const [pets, setPets] = useState([]);
 
-    function handleChange({ target }) {
-        const { name, value } = target;
-        setSearchInfo({ ...searchInfo, [name]: value });
-        console.log(searchInfo);
+  const handleChange = ({ target: { name, value } }) => {
+    setSearchInfo((prevState) => ({ ...prevState, [name]: value }));
+  };
+
+  const loadPets = async () => {
+    try {
+      const { data } = await axios.get(`${SERVER_URL}/pets/all`);
+      setPets(data);
+    } catch (error) {
+      console.error(error);
     }
+  };
 
-    // function filter(pets) {
-    //     const searchField = searchInfo?.search;
+  useEffect(() => {
+    loadPets();
+  }, []);
 
-    //     // console.log("pet.name", pets);
-    //     if (Object.values(pets).includes(searchField)) return pets;
-    // }
+  const filterPets = ({ name, type }) => {
+    const searchField = searchInfo.search.toLowerCase();
+    const petType = searchInfo.type;
 
     return (
-        <Container maxWidth={"100vw"} minHeight={"80.4vh"} mb={"13px"}>
-            <Stack
-                align={"center"}
-                spacing={{ base: 8, md: 10 }}
-                mt={{ base: 10, md: 10 }}
-                direction={{ base: "column", md: "row" }}
-            >
-                <Stack flex={1} mb={5} spacing={{ base: 5, md: 10 }}>
-                    <Heading
-                        lineHeight={1.1}
-                        fontWeight={600}
-                        fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
-                    >
-                        <Text as={"span"} color={"red.400"}>
-                            Search for Pet
-                        </Text>
-                    </Heading>
-                    <Container>
-                        <Box
-                            component="form"
-                            sx={{
-                                p: "2px 4px",
-                                display: "flex",
-                                alignItems: "center",
-                                height: "fit-content",
-                            }}
-                        >
-                            <Input
-                                name="search"
-                                type="search"
-                                placeholder="Search"
-                                onChange={handleChange}
-                                sx={{ ml: 1, flex: 1 }}
-                                inputProps={{ "aria-label": "search" }}
-                            ></Input>
-                            <Button disabled>Clear</Button>
-                            <IconButton
-                                type="submit"
-                                sx={{ p: "10px" }}
-                                aria-label="search"
-                                icon={<SearchIcon />}
-                            ></IconButton>{" "}
-                        </Box>
-                        <CheckboxGroup
-                            colorScheme="green"
-                            defaultValue={["Dog", "Cat"]}
-                            name="type"
-                            type="checkbox"
-                            onChange={handleChange}
-                        >
-                            <Stack
-                                spacing={[1, 5]}
-                                direction={["column", "row"]}
-                                align={"center"}
-                            >
-                                <Checkbox value="Dog">Dog</Checkbox>
-                                <Checkbox value="Cat">Cat</Checkbox>
-                            </Stack>
-                        </CheckboxGroup>
-                    </Container>
-                </Stack>
-            </Stack>
-            <PetGrid>
-                {pets?./*.filter(filter)*/map((pet) => (
-                    <PetCard key={pet._id} pet={pet} />
-                ))}
-            </PetGrid>
-        </Container>
+      name.toLowerCase().includes(searchField) && petType.includes(type)
     );
+  };
+
+  return (
+    <Container maxWidth="100vw" minHeight="80.4vh" mb="13px">
+      <Stack
+        align="center"
+        spacing={{ base: 8, md: 10 }}
+        mt={{ base: 10, md: 10 }}
+        direction={{ base: "column", md: "row" }}
+      >
+        <PetSearch searchInfo={searchInfo} handleChange={handleChange} />
+      </Stack>
+      <PetGrid>
+        {pets
+          .filter(filterPets)
+          .map((pet) => <PetCard key={pet._id} pet={pet} />)}
+      </PetGrid>
+    </Container>
+  );
 }

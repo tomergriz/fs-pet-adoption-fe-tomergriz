@@ -1,49 +1,30 @@
-if (typeof process === "undefined") {
-    var process = {
-        env: {
-            NODE_ENV: "development",
-        },
-    };
-}
-
 import { createContext, useEffect, useContext, useState } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, Button } from "@chakra-ui/react";
 
-export const UserContext = createContext("");
-export const useUserContext = () => {
-    return useContext(UserContext);
-};
+export const UserContext = createContext({});
+export const useUserContext = () => useContext(UserContext);
 
-export default function UserContextProvider(props) {
+export default function UserContextProvider({ children }) {
     const SERVER_URL = import.meta.env.VITE_REACT_APP_SERVER_URL || "http://localhost:8080";
-    const [token, setToken] = useState(() => {
-        const storedToken = localStorage.getItem("token");
-        return storedToken ? storedToken : null;
-    });
+    const [token, setToken] = useState(() => localStorage.getItem("token"));
+    const [currentUser, setCurrentUser] = useState(() => JSON.parse(localStorage.getItem("user")) || {});
+    const [isTokenExpired, setIsTokenExpired] = useState(false);
 
-    const [currentUser, setCurrentUser] = useState(() => {
-        const user = JSON.parse(localStorage.getItem("user"));
-        return user ? user : {};
-    });
-
-    const isLoggedIn = currentUser !== null;
+    const isLoggedIn = !!token;
 
     const logout = async () => {
         try {
-            await axios.post(
+            await axios.get(
                 `${SERVER_URL}/users/logout`,
-                {},
                 {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                  headers: { Authorization: `Bearer ${token}` },
                 }
-            );
+              );
         } catch (error) {
             console.error(error);
         }
-
         localStorage.removeItem("token");
         localStorage.removeItem("user");
         setCurrentUser({});
@@ -52,10 +33,8 @@ export default function UserContextProvider(props) {
 
     const updateUser = (newUser, id) => {
         try {
-            setUsers((prevUsers) => {
-                const index = prevUsers.findIndex((user) => user._id === id);
-                prevUsers[index] = newUser;
-                return prevUsers;
+            setCurrentUser((prevUser) => {
+                return prevUser._id === id ? newUser : prevUser;
             });
         } catch (error) {
             console.error(error);
@@ -63,43 +42,62 @@ export default function UserContextProvider(props) {
     };
 
     useEffect(() => {
-        const user = JSON.parse(localStorage.getItem("user"));
         const storedToken = localStorage.getItem("token");
+        const user = JSON.parse(localStorage.getItem("user"));
 
         if (storedToken) {
             const decodedToken = jwtDecode(storedToken);
             const isTokenExpired = decodedToken.exp * 1000 < Date.now();
+
             if (isTokenExpired) {
+                setIsTokenExpired(true);
                 logout();
             } else {
-                setCurrentUser(user ? user : {});
+                setCurrentUser(user || {});
                 setToken(storedToken);
+
+                const interval = setInterval(() => {
+                    const decodedToken = jwtDecode(token);
+                    if (decodedToken.exp * 1000 < Date.now()) {
+                        clearInterval(interval);
+                        setIsTokenExpired(true);
+                        logout();
+                    }
+                }, 5000);
             }
         } else {
             setCurrentUser({});
             setToken(null);
         }
-    }, []);
-
-    useEffect(() => {
-        if (token === null) {
-            logout();
-        }
     }, [token]);
 
     return (
-        <UserContext.Provider
-            value={{
-                SERVER_URL,
-                currentUser,
-                setCurrentUser,
-                isLoggedIn,
-                updateUser,
-                token,
-                setToken,
-            }}
-        >
-            {props.children}
+        <UserContext.Provider value={{ SERVER_URL, currentUser, setCurrentUser, isLoggedIn, updateUser, token, setToken }}>
+            {children}
+            {isTokenExpired && (
+                <Modal isOpen={isTokenExpired} onClose={() => setIsTokenExpired(false)}>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>Token Expired</ModalHeader>
+                        <ModalBody>Your session has expired. Please log in again to continue using the application.</ModalBody>
+                        <ModalFooter>
+                            <Button
+                                fontSize={"sm"}
+                                fontWeight={600}
+                                color={"white"}
+                                bg={"red.400"}
+                                border={"none"}
+                                transition={"all .3s ease"}
+                                _hover={{ bg: "red.500" }}
+                                mr={3}
+                                onClick={() => setIsTokenExpired(false)}
+                            >
+                                Close
+                            </Button>
+                        </ModalFooter>
+                    </ModalContent>
+                </Modal>
+            )}
         </UserContext.Provider>
     );
 }

@@ -10,8 +10,6 @@ export default function PetContextProvider(props) {
 
     const [pets, setPets] = useState([]);
 
-    
-
     const loadPets = async () => {
         try {
             const res = await axios.get(`${SERVER_URL}/pets/all`);

@@ -17,11 +17,12 @@ import PetContextProvider from "../context/PetContext";
 import MyPets from "../Pages/MyPets";
 import PetCardPage from "../Pages/PetCardPage";
 
+
 function App() {
     return (
         <>
             <UserContextProvider>
-                <PetContextProvider>
+                {/* <PetContextProvider> */}
                     <MenuBar />
                     <Box>
                         <Routes>
@@ -47,7 +48,7 @@ function App() {
                             <Route path="*" element={<Page404 />} />
                         </Routes>
                     </Box>
-                </PetContextProvider>
+                {/* </PetContextProvider> */}
             </UserContextProvider>
         </>
     );
