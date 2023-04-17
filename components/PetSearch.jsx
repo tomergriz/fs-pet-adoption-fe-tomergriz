@@ -1,4 +1,5 @@
-import { Heading, Text, Input, Button, IconButton, Checkbox, CheckboxGroup, Box, Container, Stack } from "@chakra-ui/react";
+import { useState } from "react";
+import { Heading, Text, Input, Button, IconButton, Checkbox, CheckboxGroup, Box, Container, Stack, useColorModeValue } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
 export default function PetSearch({ searchInfo: { search, type }, handleChange }) {

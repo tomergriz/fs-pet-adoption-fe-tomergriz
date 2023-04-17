@@ -14,9 +14,9 @@ import {
     Flex,
 } from "@chakra-ui/react";
 import * as React from "react";
-import { FavoriteButton } from "./FavoriteButton";
 import { NavLink } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext";
+import FavoriteButton from "./FavoriteButton";
 import axios from "axios";
 
 export default function PetCard({ pet, rootProps }) {
@@ -132,6 +132,7 @@ export default function PetCard({ pet, rootProps }) {
                             {pet?.adoptionStatus}
                         </Text>
                     )}
+                    
                     <Text
                         fontSize={"sm"}
                         as={NavLink}

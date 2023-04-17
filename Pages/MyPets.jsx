@@ -1,7 +1,7 @@
 import { Container, Stack, Heading, Text } from "@chakra-ui/react";
 import React from "react";
-import PetGrid from "../components/GridWithAddToCartButton/PetGrid";
-import PetCard from "../components/GridWithAddToCartButton/PetCard";
+import PetGrid from "../components/PetComponents/PetGrid";
+import PetCard from "../components/PetComponents/PetCard";
 import { v4 as uuidv4 } from "uuid";
 import { usePetContext } from "../context/PetContext";
 
