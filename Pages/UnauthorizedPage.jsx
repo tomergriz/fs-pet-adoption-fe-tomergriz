@@ -51,7 +51,7 @@ export default function Page404({ onClose, toggle }) {
                             fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}
                         >
                             <Text as={"span"}  color={"red.400"}>
-                            Unauthorised Page
+                            Unauthorized Page
                             </Text><br/>
                             <Text as={"span"} position={"relative"}>
                             Hi{currentUser.firstName ? " ": ""}{currentUser.firstName}, you are unauthorized to view this page.

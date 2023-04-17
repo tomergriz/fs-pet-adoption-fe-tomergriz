@@ -12,7 +12,7 @@ import Dashboard from "../Pages/AdminPages/DashboardPage";
 import AddPetPage from "../Pages/AdminPages/AddPetPage";
 import Page404 from "../Pages/Page404";
 import PrivateRoute from "../components/PrivateRoute";
-import UnauthorisedPage from "../Pages/UnauthorisedPage ";
+import UnauthorizedPage from "../Pages/UnauthorizedPage";
 import PetContextProvider from "../context/PetContext";
 import MyPets from "../Pages/MyPets";
 import PetCardPage from "../Pages/PetCardPage";
@@ -33,7 +33,7 @@ function App() {
                                 path="/profile"
                                 element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
                             <Route
-                                path="/mypets"
+                                path="/myPets"
                                 element={
                                     <PrivateRoute>
                                         <MyPets />
@@ -44,7 +44,7 @@ function App() {
                             <Route path="/Dashboard" element={<Dashboard />} />
                             <Route path="/AddPetPage" element={<AddPetPage />} />
                             <Route path="search/pet/:id" element={<PetCardPage />} />
-                            <Route path="/Unuthorised" element={<UnauthorisedPage />} />
+                            <Route path="/UnauthorizedPage" element={<UnauthorizedPage />} />
                             <Route path="*" element={<Page404 />} />
                         </Routes>
                     </Box>

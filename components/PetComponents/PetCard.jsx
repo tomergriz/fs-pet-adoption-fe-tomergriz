@@ -38,8 +38,8 @@ export default function PetCard({ pet, rootProps }) {
             if (res) {
                 // console.log("currentUser", currentUser);
                 console.log("res.data user with savedPets", res.data.saved);
-                console.log(pets)
-                setCurrentUser(res.data)
+                console.log(pets);
+                setCurrentUser(res.data);
                 console.log(res.data);
                 // loadUsers();
                 // updateUser(res.data, user._id);
@@ -93,21 +93,12 @@ export default function PetCard({ pet, rootProps }) {
                 />
             </Box>
             <Stack align={"center"}>
-                <Text
-                    spacing="1"
-                    fontWeight="medium"
-                    color={useColorModeValue("gray.700", "gray.400")}
-                >
+                <Text spacing="1" fontWeight="medium" color={useColorModeValue("gray.700", "gray.400")}>
                     {name}
                 </Text>
             </Stack>
             <Flex justify={"center"}>
-                <Stack
-                    direction={"row"}
-                    spacing={3}
-                    alignItems="center"
-                    align="center"
-                >
+                <Stack direction={"row"} spacing={3} alignItems="center" align="center">
                     {pet?.adoptionStatus === "Available" ? (
                         <Button
                             as={NavLink}
@@ -123,16 +114,11 @@ export default function PetCard({ pet, rootProps }) {
                             {pet?.adoptionStatus}
                         </Button>
                     ) : (
-                        <Text
-                            as={Text}
-                            fontSize={"m"}
-                            fontWeight={600}
-                            color={useColorModeValue("red.700", "red.400")}
-                        >
+                        <Text as={Text} fontSize={"m"} fontWeight={600} color={useColorModeValue("red.700", "red.400")}>
                             {pet?.adoptionStatus}
                         </Text>
                     )}
-                    
+
                     <Text
                         fontSize={"sm"}
                         as={NavLink}
