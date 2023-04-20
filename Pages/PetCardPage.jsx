@@ -36,9 +36,8 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 export default function PetCardPage() {
     const { currentUser, SERVER_URL, token } = useUserContext();
-    const [pet, setPet] = useState();
     const { id } = useParams();
-    // console.log("currentUser", currentUser);
+    const [pet, setPet] = useState();
 
     const url = `${SERVER_URL}/pets/${id}`;
     const loadPets = async () => {
@@ -52,7 +51,7 @@ export default function PetCardPage() {
 
     useEffect(() => {
         loadPets();
-    }, []);
+    }, [SERVER_URL, id]);
 
     return (
         <Box

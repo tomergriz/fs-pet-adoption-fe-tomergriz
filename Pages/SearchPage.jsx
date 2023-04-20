@@ -42,7 +42,7 @@ export default function Cards() {
         const searchField = searchInfo.search.toLowerCase();
         const petType = searchInfo.type;
 
-        return name.toLowerCase().includes(searchField) && petType.includes(type);
+        return name?.toLowerCase().includes(searchField) && petType.includes(type);
     };
 
     return (

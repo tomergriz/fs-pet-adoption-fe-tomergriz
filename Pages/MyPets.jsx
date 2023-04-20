@@ -29,7 +29,7 @@ export default function myPets() {
                 </Stack>
             </Stack>
             <PetGrid>
-                {pets.length >0 && pets.map((pet) => (
+                {pets && pets.map((pet) => (
                     <PetCard key={uuidv4()} pet={pet} />
                 ))}
             </PetGrid>

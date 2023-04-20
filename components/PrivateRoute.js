@@ -6,8 +6,6 @@ function PrivateRoute({ children }) {
     const navigate = useNavigate();
     const { currentUser, token } = useUserContext();
 
-
-    // If not logged in - redirect
 useEffect(() => {
     if (!token) {
         return navigate('/');

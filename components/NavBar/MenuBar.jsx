@@ -46,8 +46,6 @@ export default function SignBar() {
         setToken(null);
     }
 
-    console.log("currentUser", currentUser);
-
     return (
         <Box>
             <Flex
@@ -148,7 +146,7 @@ export default function SignBar() {
 
                 <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
                     <Flex display={{ base: "none", md: "flex" }} ml={5}>
-                        <DesktopNav  currentUser={currentUser} />
+                        <DesktopNav currentUser={currentUser} />
                     </Flex>
                 </Flex>
 
@@ -217,7 +215,6 @@ export default function SignBar() {
 
 const DesktopNav = (props) => {
     const { currentUser } = props;
-console.log("currentUser", currentUser.token);
     const linkColor = useColorModeValue("gray.600", "gray.200");
     const linkHoverColor = useColorModeValue("gray.800", "white");
 

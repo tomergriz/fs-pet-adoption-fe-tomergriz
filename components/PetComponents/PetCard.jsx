@@ -36,13 +36,7 @@ export default function PetCard({ pet, rootProps }) {
                 }
             );
             if (res) {
-                // console.log("currentUser", currentUser);
-                console.log("res.data user with savedPets", res.data.saved);
-                console.log(pets);
                 setCurrentUser(res.data);
-                console.log(res.data);
-                // loadUsers();
-                // updateUser(res.data, user._id);
             }
         } catch (err) {
             console.log(err);
