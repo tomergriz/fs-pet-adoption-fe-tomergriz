@@ -30,7 +30,7 @@ import React, { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useUserContext } from "../context/UserContext";
 import axios from "axios";
-import { DropzoneArea } from "material-ui-dropzone";
+// import { DropzoneArea } from "material-ui-dropzone";
 
 export default function AddPetPage({ onClose, toggle }) {
     const { token, currentUser, SERVER_URL } = useUserContext();
@@ -171,13 +171,13 @@ export default function AddPetPage({ onClose, toggle }) {
                         </FormControl>
                         <FormControl id="picture" isRequired>
                             <FormLabel>Picture</FormLabel>
-                            <DropzoneArea
+                            {/* <DropzoneArea
                                 acceptedFiles={["image/*"]}
                                 dropzoneText={"Drag and drop an image here or click to select"}
                                 onChange={(files) => {
                                     setPetInfo({ ...petInfo, picture: files[0] });
                                 }}
-                            />
+                            /> */}
                         </FormControl>
                         <Stack spacing={1} pt={2}>
                             <Text color={"red"}>{errorMassage}</Text>
