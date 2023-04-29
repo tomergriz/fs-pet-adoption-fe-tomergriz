@@ -7,6 +7,7 @@ import theme from "./theme/theme";
 import Favicon from "react-favicon";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
+
 // import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

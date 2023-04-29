@@ -15,10 +15,8 @@ import {
   import React from "react";
   import AdminUsers from "../../components/Admin/AdminUsers";
 //   import AdminPets from "../../components/Admin/AdminPets";
-  import { useUserContext } from "../../context/usercontext";
   
   export default function AdminPage() {
-    const { currentUser, token } = useUserContext();
   
     return (
       <Box>

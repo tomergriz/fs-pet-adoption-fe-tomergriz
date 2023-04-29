@@ -24,19 +24,30 @@ import {
     Heading,
     Text,
     useColorModeValue,
+    useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 import axios from "axios";
-
+import { DropzoneArea } from "material-ui-dropzone";
 
 export default function AddPetPage({ onClose, toggle }) {
     const { token, currentUser, SERVER_URL } = useUserContext();
-    const [petInfo, setPetInfo] = useState({});
+    const [petInfo, setPetInfo] = useState({
+        type: "",
+        name: "",
+        height: "",
+        weight: "",
+        color: "",
+        breed: "",
+        hypoallergnic: "",
+        bio: "",
+        picture: "",
+    });
     const [errorMassage, setErrorMassage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+
+    const toast = useToast();
 
     const handleChange = ({ target }) => {
         const { name, value } = target;
@@ -44,25 +55,51 @@ export default function AddPetPage({ onClose, toggle }) {
     };
 
     const handleSignUp = async () => {
-        console.log("petInfo", petInfo);
-        console.log("token", token);
         try {
-            const res = await axios.post(`${SERVER_URL}/pets/pet`, petInfo, {
+            const formData = new FormData();
+            formData.append("type", petInfo.type || "Dog");
+            formData.append("name", petInfo.name);
+            formData.append("height", petInfo.height);
+            formData.append("weight", petInfo.weight);
+            formData.append("color", petInfo.color);
+            formData.append("breed", petInfo.breed);
+            formData.append("hypoallergnic", petInfo.hypoallergnic || "false");
+            formData.append("bio", petInfo.bio);
+            formData.append("petImage", petInfo.picture);
+    
+            const res = await axios.post(`${SERVER_URL}/pets/add`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
                 },
             });
             if (res.data) {
-                console.log("res.data", res.data);
-                setSuccessMessage("Form has been submitted.");
                 setErrorMassage("");
+                toast({
+                    title: "Pet was successfully Added !",
+                    status: "success",
+                    position: "top",
+                    duration: 5000,
+                    isClosable: true,
+                });
+                setPetInfo({
+                    type: "",
+                    name: "",
+                    height: "",
+                    weight: "",
+                    color: "",
+                    breed: "",
+                    hypoallergnic: "",
+                    bio: "",
+                    picture: "",
+                });
             }
         } catch (err) {
-            console.log(err);
-            setErrorMassage(err.response.data || "Internal Server Error");
-            setSuccessMessage("");
+            setErrorMassage(err?.response?.data || "Internal Server Error");
         }
     };
+    
+
     return (
         <>
             <Container minHeight={"80.4vh"} mb={"13px"}>
@@ -132,16 +169,21 @@ export default function AddPetPage({ onClose, toggle }) {
                             <FormLabel>Bio</FormLabel>
                             <Input type="text" name="bio" onChange={handleChange} />
                         </FormControl>
-                        <FormControl id="picture">
+                        <FormControl id="picture" isRequired>
                             <FormLabel>Picture</FormLabel>
-                            <Input type="text" name="picture" onChange={handleChange} />
+                            <DropzoneArea
+                                acceptedFiles={["image/*"]}
+                                dropzoneText={"Drag and drop an image here or click to select"}
+                                onChange={(files) => {
+                                    setPetInfo({ ...petInfo, picture: files[0] });
+                                }}
+                            />
                         </FormControl>
                         <Stack spacing={1} pt={2}>
                             <Text color={"red"}>{errorMassage}</Text>
-                            {successMessage && <Text color={"green"}>{successMessage}</Text>}
                             <Button
                                 loadingText="Submitting"
-                                disabled={petInfo.type === undefined || petInfo.name === undefined}
+                                isDisabled={petInfo.name === "" || petInfo.picture === undefined}
                                 fontSize={"sm"}
                                 fontWeight={600}
                                 color={"white"}
@@ -152,7 +194,7 @@ export default function AddPetPage({ onClose, toggle }) {
                                     handleSignUp();
                                 }}
                             >
-                                Update Details
+                                Add Pet
                             </Button>
                         </Stack>
                     </FormControl>
