@@ -34,10 +34,17 @@ import jwtDecode from "jwt-decode";
 
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
-    const { colorMode, toggleColorMode } = useColorMode();
     const { currentUser, setCurrentUser, token, setToken, user } = useUserContext();
-
     const { isOpen: modalIsOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure();
+
+    const { colorMode, toggleColorMode } = useColorMode();
+    useEffect(() => {
+        const systemColorMode =
+            window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        if (systemColorMode !== colorMode) {
+            toggleColorMode();
+        }
+    }, []);
 
     async function logout() {
         window.localStorage.removeItem("token");
@@ -150,7 +157,14 @@ export default function SignBar() {
                     </Flex>
                 </Flex>
 
-                <Stack px={{ base: 4 }} flex={{ base: 1, md: 0 }} justify={"flex-end"} direction={"row"} align={"center"} spacing={6}>
+                <Stack
+                    px={{ base: 4 }}
+                    flex={{ base: 1, md: 0 }}
+                    justify={"flex-end"}
+                    direction={"row"}
+                    align={"center"}
+                    spacing={6}
+                >
                     <Link onClick={toggleColorMode} bg={useColorModeValue("white", "gray.800")}>
                         {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
                     </Link>
@@ -232,33 +246,58 @@ const DesktopNav = (props) => {
                     }}
                 >
                     <Link mr={5} as={NavLink} to="/" title="home">
-                        <Text as={"span"} transition={"all .3s ease"} _groupHover={{ color: "pink.400" }} fontWeight={500}>
+                        <Text
+                            as={"span"}
+                            transition={"all .3s ease"}
+                            _groupHover={{ color: "pink.400" }}
+                            fontWeight={500}
+                        >
                             Home
                         </Text>
                     </Link>
 
                     <Link mr={5} as={NavLink} to="/search" title="search">
-                        <Text as={"span"} transition={"all .3s ease"} _groupHover={{ color: "pink.400" }} fontWeight={500}>
+                        <Text
+                            as={"span"}
+                            transition={"all .3s ease"}
+                            _groupHover={{ color: "pink.400" }}
+                            fontWeight={500}
+                        >
                             Search
                         </Text>
                     </Link>
                     {currentUser.token !== undefined && (
                         <Link mr={5} as={NavLink} to="/mypets" title="mypets">
-                            <Text as={"span"} transition={"all .3s ease"} _groupHover={{ color: "pink.400" }} fontWeight={500}>
+                            <Text
+                                as={"span"}
+                                transition={"all .3s ease"}
+                                _groupHover={{ color: "pink.400" }}
+                                fontWeight={500}
+                            >
                                 My Pets
                             </Text>
                         </Link>
                     )}
                     {currentUser.token !== undefined && currentUser.isAdmin === true && (
                         <Link mr={5} as={NavLink} to="/dashboard" title="dashboard">
-                            <Text as={"span"} transition={"all .3s ease"} _groupHover={{ color: "pink.400" }} fontWeight={500}>
+                            <Text
+                                as={"span"}
+                                transition={"all .3s ease"}
+                                _groupHover={{ color: "pink.400" }}
+                                fontWeight={500}
+                            >
                                 Dashboard
                             </Text>
                         </Link>
                     )}
                     {currentUser.token !== undefined && (
                         <Link mr={5} as={NavLink} to="/AddPetPage" title="AddPetPage">
-                            <Text as={"span"} transition={"all .3s ease"} _groupHover={{ color: "pink.400" }} fontWeight={500}>
+                            <Text
+                                as={"span"}
+                                transition={"all .3s ease"}
+                                _groupHover={{ color: "pink.400" }}
+                                fontWeight={500}
+                            >
                                 Add Pet
                             </Text>
                         </Link>

@@ -4,59 +4,87 @@ import { useUserContext } from "../context/UserContext";
 
 export default function CallToActionWithVideo() {
   const { currentUser } = useUserContext();
+  const blackCatBackground = "/img/black-cat-green-eyes-black-remove-background.jpg";
+  const dogBackground = "/img/Emotional-Industry.jpg";
 
   return (
-    <Container maxWidth={"100vw"} minHeight={"80.4vh"} mb={"13px"}>
-      <Stack align={"center"} spacing={{ base: 8, md: 10 }} mt={{ base: 10, md: 10 }} direction={{ base: "column", md: "row" }}>
-        <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-          <Heading lineHeight={1.1} fontWeight={600} fontSize={{ base: "3xl", sm: "4xl", lg: "6xl" }}>
-            <Text as={"span"} position={"relative"}>
-              Hello {currentUser?.firstName ? `${currentUser.firstName} ${currentUser.lastName}` : 'there'} <br />
-              Adopt A Pet.
-            </Text>
+    <Container maxWidth="100vw" minHeight="calc(100vh - 64px)" pt="32px" pb="64px">
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        spacing={{ base: 10, md: 12 }}
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Flex
+          direction="column"
+          alignItems={{ base: "center", md: "flex-start" }}
+          justifyContent="center"
+          flex="1"
+          textAlign={{ base: "center", md: "left" }}
+        >
+          <Heading
+            as="h1"
+            fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
+            fontWeight="bold"
+            lineHeight="1.2"
+            mb={{ base: 4, md: 8 }}
+            color={useColorModeValue("gray.900", "white")}
+          >
+            Hello,{" "}
+            {currentUser?.firstName ? (
+              <>
+                {currentUser.firstName} {currentUser.lastName}
+              </>
+            ) : (
+              "there"
+            )}
             <br />
-            <Text as={"span"} color={"red.400"}>
-              You'll save a life.
-            </Text>
+            Adopt a Pet.
           </Heading>
-          <Text color={"gray.500"}>
-            The number of euthanized animals could be reduced dramatically if more people adopt pets instead of buying them.
-            <br /> When you adopt dogs and cats, you save a loving animal by making them part of your family and open up shelter space for
-            another animal who might desperately need it.
+          <Text
+            fontSize={{ base: "md", md: "lg" }}
+            color={useColorModeValue("gray.600", "gray.400")}
+            mb={{ base: 8, md: 12 }}
+            maxW={{ base: "100%", md: "90%", lg: "80%" }}
+            lineHeight="tall"
+            textAlign={{ base: "center", md: "left" }}
+          >
+            The number of euthanized animals could be reduced dramatically if more people adopt pets instead of buying
+            them. When you adopt dogs and cats, you save a loving animal by making them part of your family and open up
+            shelter space for another animal who might desperately need it.
           </Text>
-          <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: "column", sm: "row" }}>
-            <Button
-              fontSize={"sm"}
-              fontWeight={600}
-              as={NavLink}
-              to="/search"
-              title="search"
-              rounded={"full"}
-              size={"lg"}
-              px={8}
-              colorScheme={"red"}
-              bg={"red.400"}
-              _hover={{ bg: "red.500", color: "white" }}
-            >
-              Get started
-            </Button>
-          </Stack>
-        </Stack>
-        <Flex flex={1} justify={"center"} align={"center"} position={"relative"} w={"full"}>
-          <Box position={"relative"} height={{base: "200px", md: "300px"}} rounded={"2xl"} boxShadow={"2xl"} width={"full"} overflow={"hidden"}>
-            <Image
-              alt={"Hero Image"}
-              fit={"cover"}
-              align={"center"}
-              w={"100%"}
-              h={"100%"}
-              src={useColorModeValue(
-                "https://www.k9franchise.com/wp-content/uploads/2020/03/Emotional-Industry.jpg",
-                "https://c4.wallpaperflare.com/wallpaper/755/310/505/black-cat-green-eyes-black-background-black-short-fur-cat-wallpaper-preview.jpg"
-              )}
-            />
-          </Box>
+          <Button
+            as={NavLink}
+            to="/search"
+            variant="solid"
+            size="lg"
+            bg={"red.400"}
+            color={"white"}
+            colorScheme="red"
+            _hover={{ bg: "red.500", color: "white" }}
+          >
+            Get Started
+          </Button>
         </Flex>
+        <Box
+          flex="1"
+          position="relative"
+          overflow="hidden"
+          rounded="2xl"
+          boxShadow={useColorModeValue("2xl", "none")}
+          zIndex="-1"
+          mt={{ base: 8, md: 0 }}
+          ml={{ base: 0, md: 12 }}
+        >
+          <Image
+            src={useColorModeValue(dogBackground, blackCatBackground)}
+            alt="Hero Image"
+            objectFit="cover"
+            objectPosition="center"
+            w="100%"
+            h="100%"
+          />
+        </Box>
       </Stack>
     </Container>
   );
