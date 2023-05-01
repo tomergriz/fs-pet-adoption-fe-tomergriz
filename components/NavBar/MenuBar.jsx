@@ -34,17 +34,9 @@ import jwtDecode from "jwt-decode";
 
 export default function SignBar() {
     const { isOpen, onToggle } = useDisclosure();
+    const { colorMode, toggleColorMode } = useColorMode();
     const { currentUser, setCurrentUser, token, setToken, user } = useUserContext();
     const { isOpen: modalIsOpen, onOpen: modalOnOpen, onClose: modalOnClose } = useDisclosure();
-
-    const { colorMode, toggleColorMode } = useColorMode();
-    useEffect(() => {
-        const systemColorMode =
-            window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        if (systemColorMode !== colorMode) {
-            toggleColorMode();
-        }
-    }, []);
 
     async function logout() {
         window.localStorage.removeItem("token");
