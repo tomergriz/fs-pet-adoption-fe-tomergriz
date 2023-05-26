@@ -1,11 +1,34 @@
+import { useEffect, useState } from "react";
 import { Container, Stack, Flex, Box, Heading, Text, Button, Image, useColorModeValue } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
 export default function CallToActionWithVideo() {
     const { currentUser } = useUserContext();
-    const blackCatBackground = "https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png";
-    const dogBackground = "https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058834/Emotional-Industry_ladyti.jpg";
+    const [isLoading, setIsLoading] = useState(true);
+    const [imageSrc, setImageSrc] = useState("");
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const response = await fetch(
+                    "https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058834/Emotional-Industry_ladyti.jpg"
+                );
+                const data = await response.blob();
+                const url = URL.createObjectURL(data);
+                setImageSrc(url);
+                setIsLoading(false);
+            } catch (error) {
+                console.error("Error fetching image:", error);
+                setIsLoading(false);
+            }
+        };
+
+        fetchImage();
+    }, []);
+
+    // const blackCatBackground = "https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png";
+    // const dogBackground = "https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058834/Emotional-Industry_ladyti.jpg";
 
     return (
         <Container maxWidth="100vw" minHeight="calc(100vh - 64px)" pt="32px" pb="64px">
@@ -76,14 +99,26 @@ export default function CallToActionWithVideo() {
                     mt={{ base: 8, md: 0 }}
                     ml={{ base: 0, md: 12 }}
                 >
-                    <Image
+                     {isLoading ? (
+                        <p>Loading image...</p>
+                    ) : (
+                        <Image
+                            src={imageSrc}
+                            alt="Hero Image"
+                            objectFit="cover"
+                            objectPosition="center"
+                            w="100%"
+                            h="100%"
+                        />
+                    )}
+                    {/* <Image
                         src={useColorModeValue(dogBackground, blackCatBackground)}
                         alt="Hero Image"
                         objectFit="cover"
                         objectPosition="center"
                         w="100%"
                         h="100%"
-                    />
+                    /> */}
                 </Box>
             </Stack>
         </Container>
