@@ -5,7 +5,7 @@ import { useUserContext } from "../context/UserContext";
 export default function CallToActionWithVideo() {
     const { currentUser } = useUserContext();
     const blackCatBackground = "https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png";
-    const dogBackground = "https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058834/Emotional-Industry_ladyti.jpg";
+    const dogBackground = "./img/Emotional-Industry.jpg";
 
     return (
         <Container maxWidth="100vw" minHeight="calc(100vh - 64px)" pt="32px" pb="64px">
