@@ -102,7 +102,6 @@ export default function SignBar() {
                             >
                                 Search
                             </MenuItem>
-                            <img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png"></img>
                             {currentUser.token !== undefined && (
                                 <MenuItem
                                     as={NavLink}
@@ -259,7 +258,6 @@ const DesktopNav = (props) => {
                             Search
                         </Text>
                     </Link>
-                    <img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png"></img>
                     {currentUser.token !== undefined && (
                         <Link mr={5} as={NavLink} to="/mypets" title="mypets">
                             <Text

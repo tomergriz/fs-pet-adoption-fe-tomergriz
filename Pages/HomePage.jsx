@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Container, Stack, Flex, Box, Heading, Text, Button, Image, useColorModeValue } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
@@ -9,26 +10,19 @@ export default function CallToActionWithVideo() {
 
     return (
         <Container maxWidth="100vw" minHeight="calc(100vh - 64px)" pt="32px" pb="64px">
-            <img src="https://placekitten.com/200/300"/>
-            <img src="https://placekitten.com/200/300"/>
-            <img src="https://placekitten.com/200/301"/>
             <Stack
                 direction={{ base: "column", md: "row" }}
                 spacing={{ base: 10, md: 12 }}
                 alignItems="flex-start"
                 justifyContent="center"
-            >
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
-                <Flex
+            >   
+            <Flex
                     direction="column"
                     alignItems={{ base: "center", md: "flex-start" }}
                     justifyContent="center"
                     flex="1"
                     textAlign={{ base: "center", md: "left" }}
                 >
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                     <Heading
                         as="h1"
                         fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
@@ -37,7 +31,6 @@ export default function CallToActionWithVideo() {
                         mb={{ base: 4, md: 8 }}
                         color={useColorModeValue("gray.900", "white")}
                     >
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                         Hello{" "}
                         {currentUser?.firstName ? (
                             <>
@@ -49,7 +42,6 @@ export default function CallToActionWithVideo() {
                         <br />
                         Adopt a Pet.
                     </Heading>
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                     <Text
                         fontSize={{ base: "md", md: "lg" }}
                         color={useColorModeValue("gray.600", "gray.400")}
@@ -62,7 +54,6 @@ export default function CallToActionWithVideo() {
                         of buying them. When you adopt dogs and cats, you save a loving animal by making them part of
                         your family and open up shelter space for another animal who might desperately need it.
                     </Text>
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                     <Button
                         as={NavLink}
                         to="/search"
@@ -75,50 +66,8 @@ export default function CallToActionWithVideo() {
                     >
                         Get Started
                     </Button>
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                 </Flex>
-<img src="https://placekitten.com/200/302" alt="Hero Image" />
-                {/* <Box
-                    flex="1"
-                    position="relative"
-                    overflow="hidden"
-                    rounded="2xl"
-                    boxShadow={useColorModeValue("2xl", "none")}
-                    zIndex="-1"
-                    mt={{ base: 8, md: 0 }}
-                    ml={{ base: 0, md: 12 }}
-                >
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
-                    <Image
-                        src={useColorModeValue(dogBackground, blackCatBackground)}
-                        alt="Hero Image"
-                        objectFit="cover"
-                        objectPosition="center"
-                        w="100%"
-                        h="100%"
-                    />
-                </Box> */}
-                {/* <Box
-                    flex="1"
-                    position="relative"
-                    overflow="hidden"
-                    rounded="2xl"
-                    boxShadow={useColorModeValue("2xl", "none")}
-                    // zIndex="-1"
-                    // mt={{ base: 8, md: 0 }}
-                    // ml={{ base: 0, md: 12 }}
-                > <Text>1</Text>
-<img src="https://placekitten.com/500/200" alt="Hero Image" />
-                    <Image
-                        src={useColorModeValue("https://placekitten.com/500/200", blackCatBackground)}
-                        alt="Hero Image"
-                        objectFit="cover"
-                        objectPosition="center"
-                        w="100%"
-                        h="100%"
-                    />
-                </Box> */}
-                <Box
+                 <Box
                     flex="1"
                     position="relative"
                     overflow="hidden"
@@ -127,10 +76,9 @@ export default function CallToActionWithVideo() {
                     zIndex="1"
                     mt={{ base: 8, md: 0 }}
                     ml={{ base: 0, md: 12 }}
-                > <Text>2</Text>
-<img src="https://placekitten.com/500/200" alt="Hero Image" />
+                >
                     <Image
-                        src={useColorModeValue("https://placekitten.com/500/200", blackCatBackground)}
+                        src={useColorModeValue(dogBackground, blackCatBackground)}
                         alt="Hero Image"
                         objectFit="cover"
                         objectPosition="center"
