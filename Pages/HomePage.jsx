@@ -49,6 +49,7 @@ export default function CallToActionWithVideo() {
                         <br />
                         Adopt a Pet.
                     </Heading>
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                     <Text
                         fontSize={{ base: "md", md: "lg" }}
                         color={useColorModeValue("gray.600", "gray.400")}
@@ -61,6 +62,7 @@ export default function CallToActionWithVideo() {
                         of buying them. When you adopt dogs and cats, you save a loving animal by making them part of
                         your family and open up shelter space for another animal who might desperately need it.
                     </Text>
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                     <Button
                         as={NavLink}
                         to="/search"
@@ -73,7 +75,9 @@ export default function CallToActionWithVideo() {
                     >
                         Get Started
                     </Button>
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                 </Flex>
+<img src="https://placekitten.com/200/302" alt="Hero Image" />
                 <Box
                     flex="1"
                     position="relative"
@@ -85,6 +89,26 @@ export default function CallToActionWithVideo() {
                     ml={{ base: 0, md: 12 }}
                 >
 <img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
+                    <Image
+                        src={useColorModeValue(dogBackground, blackCatBackground)}
+                        alt="Hero Image"
+                        objectFit="cover"
+                        objectPosition="center"
+                        w="100%"
+                        h="100%"
+                    />
+                </Box>
+                <Box
+                    flex="1"
+                    // position="relative"
+                    // overflow="hidden"
+                    // rounded="2xl"
+                    // boxShadow={useColorModeValue("2xl", "none")}
+                    // zIndex="-1"
+                    // mt={{ base: 8, md: 0 }}
+                    // ml={{ base: 0, md: 12 }}
+                >
+<img src="https://placekitten.com/300/200" alt="Hero Image" />
                     <Image
                         src={useColorModeValue(dogBackground, blackCatBackground)}
                         alt="Hero Image"
