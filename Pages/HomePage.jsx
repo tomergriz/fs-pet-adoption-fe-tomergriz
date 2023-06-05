@@ -78,7 +78,7 @@ export default function CallToActionWithVideo() {
 <img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                 </Flex>
 <img src="https://placekitten.com/200/302" alt="Hero Image" />
-                <Box
+                {/* <Box
                     flex="1"
                     position="relative"
                     overflow="hidden"
@@ -97,20 +97,40 @@ export default function CallToActionWithVideo() {
                         w="100%"
                         h="100%"
                     />
-                </Box>
+                </Box> */}
                 <Box
                     flex="1"
+                    position="relative"
+                    overflow="hidden"
+                    rounded="2xl"
+                    boxShadow={useColorModeValue("2xl", "none")}
+                    // zIndex="-1"
+                    // mt={{ base: 8, md: 0 }}
+                    // ml={{ base: 0, md: 12 }}
+                > <Text>1</Text>
+<img src="https://placekitten.com/500/200" alt="Hero Image" />
+                    <Image
+                        src={useColorModeValue("https://placekitten.com/500/200", blackCatBackground)}
+                        alt="Hero Image"
+                        objectFit="cover"
+                        objectPosition="center"
+                        w="100%"
+                        h="100%"
+                    />
+                </Box>
+                <Box
+                    // flex="1"
                     // position="relative"
                     // overflow="hidden"
                     // rounded="2xl"
                     // boxShadow={useColorModeValue("2xl", "none")}
-                    // zIndex="-1"
-                    // mt={{ base: 8, md: 0 }}
-                    // ml={{ base: 0, md: 12 }}
-                >
-<img src="https://placekitten.com/300/200" alt="Hero Image" />
+                    zIndex="-1"
+                    mt={{ base: 8, md: 0 }}
+                    ml={{ base: 0, md: 12 }}
+                > <Text>2</Text>
+<img src="https://placekitten.com/500/200" alt="Hero Image" />
                     <Image
-                        src={useColorModeValue(dogBackground, blackCatBackground)}
+                        src={useColorModeValue("https://placekitten.com/500/200", blackCatBackground)}
                         alt="Hero Image"
                         objectFit="cover"
                         objectPosition="center"
