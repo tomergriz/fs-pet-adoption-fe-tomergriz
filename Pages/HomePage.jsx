@@ -77,6 +77,7 @@ export default function CallToActionWithVideo() {
                     ml={{ base: 0, md: 12 }}
                 >
                     <img src={dogBackground} alt="Hero Image" />
+                    <img src={blackCatBackground} alt="Hero Image" />
                     <Image
                         src={useColorModeValue(dogBackground, blackCatBackground)}
                         alt="Hero Image"
