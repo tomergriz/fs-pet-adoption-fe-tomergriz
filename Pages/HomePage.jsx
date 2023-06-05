@@ -78,7 +78,7 @@ export default function CallToActionWithVideo() {
                     ml={{ base: 0, md: 12 }}
                 >
                     <Image
-                        src={useColorModeValue("./img/Emotional-Industry.jpg", "https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png")}
+                        src={useColorModeValue("../img/Emotional-Industry.jpg", {blackCatBackground})}
                         alt="Hero Image"
                         objectFit="cover"
                         objectPosition="center"
