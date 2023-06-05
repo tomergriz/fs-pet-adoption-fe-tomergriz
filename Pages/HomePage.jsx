@@ -98,7 +98,7 @@ export default function CallToActionWithVideo() {
                         h="100%"
                     />
                 </Box> */}
-                <Box
+                {/* <Box
                     flex="1"
                     position="relative"
                     overflow="hidden"
@@ -117,14 +117,14 @@ export default function CallToActionWithVideo() {
                         w="100%"
                         h="100%"
                     />
-                </Box>
+                </Box> */}
                 <Box
-                    // flex="1"
-                    // position="relative"
-                    // overflow="hidden"
-                    // rounded="2xl"
-                    // boxShadow={useColorModeValue("2xl", "none")}
-                    zIndex="-1"
+                    flex="1"
+                    position="relative"
+                    overflow="hidden"
+                    rounded="2xl"
+                    boxShadow={useColorModeValue("2xl", "none")}
+                    // zIndex="-1"
                     mt={{ base: 8, md: 0 }}
                     ml={{ base: 0, md: 12 }}
                 > <Text>2</Text>
