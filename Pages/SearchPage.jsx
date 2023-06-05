@@ -36,7 +36,7 @@ export default function Cards() {
 
     useEffect(() => {
         loadPets();
-    }, []);
+    }, [pets]);
 
     const filterPets = ({ name, type }) => {
         const searchField = searchInfo.search.toLowerCase();
