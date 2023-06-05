@@ -124,7 +124,7 @@ export default function CallToActionWithVideo() {
                     overflow="hidden"
                     rounded="2xl"
                     boxShadow={useColorModeValue("2xl", "none")}
-                    // zIndex="-1"
+                    zIndex="1"
                     mt={{ base: 8, md: 0 }}
                     ml={{ base: 0, md: 12 }}
                 > <Text>2</Text>
