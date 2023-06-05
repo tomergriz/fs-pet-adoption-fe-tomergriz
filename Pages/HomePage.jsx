@@ -9,15 +9,18 @@ export default function CallToActionWithVideo() {
 
     return (
         <Container maxWidth="100vw" minHeight="calc(100vh - 64px)" pt="32px" pb="64px">
-<img src={dogBackground} alt="Hero Image" />
-<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
-<img src={dogBackground} alt="Hero Image" width="100px" zIndex="100"/>
+            <img src="https://placekitten.com/200/300"/>
+            <img src="https://placekitten.com/200/300"/>
+            <img src="https://placekitten.com/200/301"/>
             <Stack
                 direction={{ base: "column", md: "row" }}
                 spacing={{ base: 10, md: 12 }}
                 alignItems="flex-start"
                 justifyContent="center"
             >
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                 <Flex
                     direction="column"
                     alignItems={{ base: "center", md: "flex-start" }}
@@ -25,6 +28,7 @@ export default function CallToActionWithVideo() {
                     flex="1"
                     textAlign={{ base: "center", md: "left" }}
                 >
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                     <Heading
                         as="h1"
                         fontSize={{ base: "3xl", sm: "4xl", md: "5xl", lg: "6xl" }}
@@ -33,6 +37,7 @@ export default function CallToActionWithVideo() {
                         mb={{ base: 4, md: 8 }}
                         color={useColorModeValue("gray.900", "white")}
                     >
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                         Hello{" "}
                         {currentUser?.firstName ? (
                             <>
@@ -79,6 +84,7 @@ export default function CallToActionWithVideo() {
                     mt={{ base: 8, md: 0 }}
                     ml={{ base: 0, md: 12 }}
                 >
+<img src="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058835/black-cat-green-eyes-black-remove-background_pdet0g.png" alt="Hero Image" />
                     <Image
                         src={useColorModeValue(dogBackground, blackCatBackground)}
                         alt="Hero Image"
