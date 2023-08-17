@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 import * as React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
@@ -20,6 +21,12 @@ import PetCardPage from "../Pages/PetCardPage";
 function App() {
     return (
         <>
+            <Helmet>
+                <meta property="og:title" content="Pet Adoption Platform" />
+                <meta property="og:description" content="The number of euthanized animals could be reduced dramatically if more people adopt pets instead of buying them. When you adopt dogs and cats, you save a loving animal by making them part of your family and open up shelter space for another animal who might desperately need it." />
+                <meta property="og:image" content="https://res.cloudinary.com/dslnuaqdh/image/upload/v1683058834/Emotional-Industry_ladyti.jpg" />
+                <meta property="og:url" content="https://pet-adoption-o.netlify.app/" />
+            </Helmet>
             <UserContextProvider>
                 {/* <PetContextProvider> */}
                 <MenuBar />
